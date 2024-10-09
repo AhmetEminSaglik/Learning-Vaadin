@@ -1,0 +1,6 @@
+Signup Page
+    - First Name
+    - Last Name
+    - Username
+    - Email
+    - Phone No
