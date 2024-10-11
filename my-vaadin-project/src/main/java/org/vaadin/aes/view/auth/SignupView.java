@@ -1,8 +1,9 @@
 package org.vaadin.aes.view.auth;
 
 import com.vaadin.flow.component.HasValue;
+import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -10,7 +11,7 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.service.user.AuthenticationService;
-import viewmodel.auth.SignupViewModel;
+import org.vaadin.aes.auth.SignupViewModel;
 
 import java.util.stream.Stream;
 
@@ -20,7 +21,7 @@ import java.util.stream.Stream;
 public class SignupView extends VerticalLayout {
 
     private SignupViewModel signupViewModel;
-    private static boolean result;
+    //    private static boolean result;
     //    String txtDemo = UI.getCurrent().getTranslation("farewell");
 //    private TextField demoText = new TextField(txtDemo);
 //    private AuthenticationService authenticationService;
@@ -39,7 +40,7 @@ public class SignupView extends VerticalLayout {
     private TextField txtPassword = new TextField("Password");
     private TextField txtConfirmPassword = new TextField("Confirm Password");
 
-    private H1 feedBackToUser;
+    private HtmlContainer feedBackToUser = new H3();
 
     @Autowired
     public SignupView(AuthenticationService authenticationService) {
@@ -63,7 +64,8 @@ public class SignupView extends VerticalLayout {
     }
 
     private void initPage() {
-        result = true;
+//        result = true;
+        setRequiredToAllTxtFields();
         setSizeFull();
         Button btnSave = getBtnSaveUser();
         add(
@@ -78,52 +80,67 @@ public class SignupView extends VerticalLayout {
                 txtUsername,
                 txtPassword,
                 txtConfirmPassword,
-                btnSave);
+                btnSave,
+                feedBackToUser);
 
+    }
+
+    private void setRequiredToAllTxtFields() {
+        getStreamOfTxtFields().forEach(e -> e.setRequired(true));
     }
 
     private Button getBtnSaveUser() {
         Button button = new Button("Save");
         button.addClickListener(e -> {
-
-            if (isAllFieldsFilled()) {
-                if (feedBackToUser != null) {
-                    remove(feedBackToUser);
+            boolean result = true;
+            if (!isAllFieldsFilled()) {
+                feedBackToUser.setText("Please fill all fields");
+            } else {
+//                if (feedBackToUser != null) {
+//                    remove(feedBackToUser);
+//                }
+                if (!isPasswordMatches()) {
+                    feedBackToUser.setText("Passwords do not match");
+                    return;
                 }
-
                 User user = convertTypedDataToUserModel();
                 result = signupViewModel.signUp(user);
                 if (result) {
-                    feedBackToUser = new H1("User Saved successfully. You can login now.");
-                    add(feedBackToUser);
+                    feedBackToUser.setText("User Saved successfully. You can login now.");
+
                 } else {
-                    feedBackToUser = new H1("Error occurred. User is not saved.");
+                    feedBackToUser.setText("Error occurred. User is not saved.");
                 }
+                resetAllTextFields();
             }
-            resetAllTextFields();
         });
 
         return button;
     }
 
     private boolean isAllFieldsFilled() {
-        getStreamOfTxtFields().forEach(e -> {
+        /*getStreamOfTxtFields().forEach(e -> {
             if (e.getValue().isBlank()) {
-                e.setErrorMessage("Please fill the required fields :" + e.getTitle());
+//                e.setErrorMessage("Please fill the required fields :" + e.getTitle());
                 result = false;
             }
-        });
-        return result;
+        });*/
+
+        boolean anyBlankField = getStreamOfTxtFields()
+                .map(e -> e.getValue().isBlank())
+                .anyMatch(isBlank -> isBlank);
+
+        return !anyBlankField;
     }
 
-    /*private boolean isPasswordMatches() {
+    private boolean isPasswordMatches() {
         boolean result = txtPassword.getValue().equals(txtConfirmPassword.getValue());
         if (!result) {
             txtConfirmPassword.setErrorMessage("Passwords are not matched.");
         }
         return result;
     }
-    */
+
     private User convertTypedDataToUserModel() {
         User user = new User();
         user.setFirstName(txtFirstName.getValue());
@@ -136,10 +153,10 @@ public class SignupView extends VerticalLayout {
     }
 
     private void resetAllTextFields() {
-        if (result) {
-            getStreamOfTxtFields()
-                    .forEach(HasValue::clear);
-        }
+//        if (result) {
+        getStreamOfTxtFields()
+                .forEach(HasValue::clear);
+//        }
     }
 
     private Stream<TextField> getStreamOfTxtFields() {
