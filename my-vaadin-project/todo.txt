@@ -1,6 +1,8 @@
-Signup Page
-    - First Name
-    - Last Name
-    - Username
-    - Email
-    - Phone No
+login page
+signup page
+---
+home                                            |-------|
+ - Food List                                    | Sepet |
+ - Profile                                      |-------|
+ - Payments
+
