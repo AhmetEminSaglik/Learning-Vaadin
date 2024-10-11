@@ -30,7 +30,7 @@ public class UserService {
 
     public User login(UserCredential creds) {
         log.info("Login process is started");
-        return userRepository.find(creds);
+        return userRepository.findUserByUsernameAndPassword(creds.getUsername(), creds.getPassword());
     }
 
 }
