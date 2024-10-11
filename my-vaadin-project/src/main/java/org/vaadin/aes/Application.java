@@ -1,5 +1,6 @@
 package org.vaadin.aes;
 
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.i18n.I18NProvider;
 import com.vaadin.flow.server.PWA;
@@ -18,6 +19,7 @@ import org.vaadin.aes.i18n.CustomI18NProvider;
 @SpringBootApplication
 @PWA(name = "Project Base for Vaadin with Spring", shortName = "Project Base")
 @Theme("my-theme")
+//@CssImport("./frontend/style.css")
 public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {
