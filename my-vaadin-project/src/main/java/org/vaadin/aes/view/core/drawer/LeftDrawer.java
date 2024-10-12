@@ -1,4 +1,4 @@
-package org.vaadin.aes.view.home.core.drawer;
+package org.vaadin.aes.view.core.drawer;
 
 import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.html.Div;

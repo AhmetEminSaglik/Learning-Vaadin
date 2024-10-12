@@ -11,8 +11,8 @@ import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.dto.MealCartDto;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
-import org.vaadin.aes.view.home.core.CustomHtmlComponents;
-import org.vaadin.aes.view.home.core.notificationn.CustomNotification;
+import org.vaadin.aes.view.core.CashFormatUtil;
+import org.vaadin.aes.view.core.CustomHtmlComponents;
 import viewmodel.home.FoodViewModel;
 
 import java.util.List;
@@ -50,16 +50,16 @@ public class FoodView extends AbstractLayoutView {
     private VerticalLayout createAllMealLayout(String title, List<Meal> meals) {
         VerticalLayout verticalLayout = createLayoutWithName(title);
         verticalLayout.setHeightFull();
-        verticalLayout.setWidth("80%");
+        verticalLayout.setWidthFull();
 
         gridAllMeals.setItems(meals);
-        gridAllMeals.setColumns("name");
         gridAllMeals.setSizeFull();
+        gridAllMeals.setColumns("name");
+        gridAllMeals.getColumns().get(0).setAutoWidth(true);
 
-
-        gridAllMeals.addComponentColumn(this::createPriceForGridComponent).setHeader("Price");
-        gridAllMeals.addComponentColumn(this::createImageForGridComponent).setHeader("Image");
-        gridAllMeals.addComponentColumn(this::createAddButtonForGridComponent).setHeader("Process");
+        gridAllMeals.addComponentColumn(this::createPriceForGridComponent).setHeader("Price").setAutoWidth(true);
+        gridAllMeals.addComponentColumn(this::createImageForGridComponent).setHeader("Image").setAutoWidth(true);
+        gridAllMeals.addComponentColumn(this::createAddButtonForGridComponent).setHeader("Process").setAutoWidth(true);
 
 
         verticalLayout.add(gridAllMeals);
@@ -82,11 +82,11 @@ public class FoodView extends AbstractLayoutView {
         gridCustomerMeals.setHeight("100%");
 
 
-        gridCustomerMeals.addComponentColumn(e -> createNameForGridComponent(e.getMeal())).setHeader("Name");
-        gridCustomerMeals.addComponentColumn(e -> createPriceForGridComponent(e.getMeal())).setHeader("Price");
-        gridCustomerMeals.addComponentColumn(e -> createImageForGridComponent(e.getMeal())).setHeader("Image");
-        gridCustomerMeals.addComponentColumn(this::createQuantityAndPriceGridComponent).setHeader("Quantity & Price");
-        gridCustomerMeals.addComponentColumn(e -> createRemoveButtonForGridComponent(e.getMeal())).setHeader("Process");
+        gridCustomerMeals.addComponentColumn(e -> createNameForGridComponent(e.getMeal())).setHeader("Name").setAutoWidth(true);
+        gridCustomerMeals.addComponentColumn(e -> createPriceForGridComponent(e.getMeal())).setHeader("Price").setAutoWidth(true);
+        gridCustomerMeals.addComponentColumn(e -> createImageForGridComponent(e.getMeal())).setHeader("Image").setAutoWidth(true);
+        gridCustomerMeals.addComponentColumn(this::createQuantityAndPriceGridComponent).setHeader("Total").setAutoWidth(true);
+        gridCustomerMeals.addComponentColumn(e -> createRemoveButtonForGridComponent(e.getMeal())).setHeader("Process").setAutoWidth(true);
 
         verticalLayout.add(gridCustomerMeals);
 
@@ -100,7 +100,7 @@ public class FoodView extends AbstractLayoutView {
     }
 
     private Paragraph createPriceForGridComponent(Meal meal) {
-        Paragraph priceParagraph = new Paragraph(meal.getPrice() + " TL");
+        Paragraph priceParagraph = new Paragraph(CashFormatUtil.convertTL(meal.getPrice()));
 //        priceParagraph.getStyle().set("font-weight", "bold");
         return priceParagraph;
     }
@@ -131,27 +131,33 @@ public class FoodView extends AbstractLayoutView {
 
 
 //        Span paragQuantity = new Span("Quantity : " + totalPrice);
-        String quantityText = "Quantity : " + quantity;
+//        String quantityText = "Quantity : " + quantity;
 //        paragQuantity.getStyle().set("font-weight", "bold");
 //        paragQuantity.getStyle().set("font-size", "15px");
 
 //        Span paragPrice = new Span("Price : " + totalPrice);
-        String priceText = "Price : " + price;
+//        String priceText = "Price : " + price;
 //        paragPrice.getStyle().set("font-weight", "bold");
 //        paragPrice.getStyle().set("font-size", "15px");
-
-        Span paragTotalprice = new Span("total price: " + totalPrice);
+//        String quantityMultiplyPrice = quantity + " x " + price;
+        Span spanQuantityMultiplyPrice = new Span(quantity + " x " + price);
+        Span spanQuantityMultiplyPrice2 = new Span(price + " x " + quantity);
+//        Span paragTotalprice = new Span("total price: " + totalPrice);
+        Span paragTotalprice = new Span(CashFormatUtil.convertTL(totalPrice));
 
         paragTotalprice.getStyle().set("font-weight", "bold");
         paragTotalprice.getStyle().set("font-size", "15px");
 
-        verticalLayout.add(quantityText);
-        verticalLayout.add(new HtmlComponent("br"));
-        verticalLayout.add(priceText);
+//        verticalLayout.add(quantityText);
+//        verticalLayout.add(new HtmlComponent("br"));
+//        verticalLayout.add(priceText);
+        verticalLayout.add(spanQuantityMultiplyPrice);
+        verticalLayout.add(spanQuantityMultiplyPrice2);
 //        verticalLayout.add(new HtmlComponent("br"));
         verticalLayout.add(paragTotalprice);
         return verticalLayout;
     }
+
 
     private Button createRemoveButtonForGridComponent(Meal meal) {
         Button button = new Button("Remove");

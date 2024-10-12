@@ -1,4 +1,4 @@
-package org.vaadin.aes.view.home.core;
+package org.vaadin.aes.view.core;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.theme.lumo.LumoUtility;

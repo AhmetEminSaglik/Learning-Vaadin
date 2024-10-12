@@ -1,15 +1,13 @@
-package org.vaadin.aes.view.home.core.header;
+package org.vaadin.aes.view.core.header;
 
 import com.vaadin.flow.component.HtmlComponent;
-import com.vaadin.flow.component.dependency.CssImport;
-import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.vaadin.aes.enums.EnumPageURL;
-import org.vaadin.aes.view.home.core.CustomHtmlComponents;
+import org.vaadin.aes.view.core.CustomHtmlComponents;
 
 //@CssImport("./style.css")
 public class CustomHeader extends HorizontalLayout {

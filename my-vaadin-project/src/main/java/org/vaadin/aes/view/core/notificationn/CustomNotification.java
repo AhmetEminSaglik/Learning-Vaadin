@@ -1,4 +1,4 @@
-package org.vaadin.aes.view.home.core.notificationn;
+package org.vaadin.aes.view.core.notificationn;
 
 import com.vaadin.flow.component.notification.Notification;
 

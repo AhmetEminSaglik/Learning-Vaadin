@@ -2,15 +2,17 @@ package org.vaadin.aes.view.home.concretes;
 
 import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
-import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.dto.MealCartDto;
 import org.vaadin.aes.model.dto.UserDataDto;
+import org.vaadin.aes.view.core.cssdesign.CssDesign;
 import viewmodel.home.OrderBasketViewModel;
 
 import java.util.ArrayList;
@@ -24,15 +26,18 @@ public class OrderBasketView extends VerticalLayout {
 // o yuzden string'i geri html componentine cevrilecek
 
     //    private final HtmlContainer userNameText = new Paragraph();
-    private final String title = "My Cart";
+    private final Span spanTitle = new Span("My Cart");
+    //    private final Span spanTitle = new Span("My Cart");
     //    private int itemSize = 0;
     private List<MealCartDto> mealCartDto = new ArrayList<>();
     private Button btnBuyAll = new Button("Buy All");
     private final OrderBasketViewModel viewModel = new OrderBasketViewModel(this);
     //    private final HtmlContainer total = new Paragraph("Total Item: " +0);
-    private String total = "Total Item: " + 0;
+//    private String total = "Total Item: " + 0;
+    private final Span spanTotal = new Span("Total Item: " + 0);
 
     public OrderBasketView() {
+
         UserDataDto userData = (UserDataDto) VaadinSession.getCurrent().getAttribute(EnumDTO.USER_DATA.getName());
         setSizeFull();
         setPadding(false);
@@ -54,34 +59,50 @@ public class OrderBasketView extends VerticalLayout {
 //        userNameText.setHeight("5%");
 //        userNameText.setHeight("30%");
 
-//        title.setWidthFull();
-//        title.setHeight("5%");
-//        title.setHeight("30%");
 
-//        total.setWidthFull();
-//        total.setHeight("5%");
-//        total.setHeight("20%");
+//        spanTotal.setHeight("20%");
 //        configureComponent(userNameText);
-//        configureComponent(title);
-//        configureComponent(total);
+
+//        configureComponent(spanTitle);
+//        configureComponent(spanTotal);
 
         btnBuyAll.setHeight("30px");
         btnBuyAll.setWidth("50%");
         btnBuyAll.getStyle().set("background-color", "#2bd617");
         btnBuyAll.getStyle().set("color", "black");
+
+        VerticalLayout innerLayout = new VerticalLayout();
+        Div innerDiv = new Div();
+        innerDiv.setWidthFull();
+        innerDiv.add(spanTitle);
+        innerDiv.add(new HtmlComponent("br"));
+        innerDiv.add(spanTotal);
+//        configureComponent(innerDiv);
+        innerLayout.setSpacing(false);
+        innerLayout.setHeightFull();
+        innerLayout.setWidthFull();
+        innerLayout.setAlignItems(Alignment.CENTER);
+
+//        innerLayout.add(spanTitle);
+//        innerLayout.add(spanTotal);
+        innerLayout.add(innerDiv);
+        innerLayout.add(btnBuyAll);
+
+
         setCssOfHtmlParagraphs();
 //        add(userNameText, title, total, btnBuyAll);
-        add(title);
-        add(new HtmlComponent("br"));
-        add(total);
-        add(btnBuyAll);
+//        add(spanTitle);
+//        add(spanTotal);
+//        add(btnBuyAll);
+        add(innerLayout);
     }
 
 
     private void configureComponent(HtmlContainer component) {
-        component.setWidth("100%");
-        component.getStyle().set("margin", "0");
-        component.getStyle().set("padding", "10px 0");
+        component.setHeight("10%");
+        component.setWidthFull();
+        CssDesign.setMargin(component);
+        CssDesign.setPadding(component);
     }
 
     private void setCssOfHtmlParagraphs() {
@@ -89,6 +110,11 @@ public class OrderBasketView extends VerticalLayout {
 //        title.getStyle().set("font-size", "20px");
 //        total.getStyle().set("font-size", "20px");
         getStyle().set("padding", "10px");
+    }
+
+    private void setActionBtnBuyAll(Button button) {
+        button.addClickShortcut(Key.ENTER);
+        button.addClickListener(e -> viewModel.buyItems());
     }
 
     public OrderBasketViewModel getViewModel() {
@@ -100,11 +126,11 @@ public class OrderBasketView extends VerticalLayout {
     }
 
     public void setTotal(int val) {
-        total = "Total Item:" + val;
+        spanTotal.setText("Total Item: " + val);
     }
 
     public String getTotal() {
-        return total;
+        return spanTotal.getText();
     }
 //    public HtmlContainer getTotal() {
 //        return total;

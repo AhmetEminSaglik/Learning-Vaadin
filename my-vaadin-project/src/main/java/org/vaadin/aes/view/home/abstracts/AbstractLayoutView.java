@@ -4,17 +4,13 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.dto.UserDataDto;
-import org.vaadin.aes.view.auth.LoginView;
-import org.vaadin.aes.view.home.core.drawer.LeftDrawer;
-import org.vaadin.aes.view.home.core.header.CustomHeader;
+import org.vaadin.aes.view.core.drawer.LeftDrawer;
+import org.vaadin.aes.view.core.header.CustomHeader;
 
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public abstract class AbstractLayoutView extends VerticalLayout implements BeforeEnterObserver {

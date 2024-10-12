@@ -3,7 +3,7 @@ package viewmodel.home;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.dto.MealCartDto;
 import org.vaadin.aes.view.home.concretes.OrderBasketView;
-import org.vaadin.aes.view.home.core.notificationn.CustomNotification;
+import org.vaadin.aes.view.core.notificationn.CustomNotification;
 
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -58,6 +58,10 @@ public class OrderBasketViewModel {
         int total = view.getMealCartDtoList().stream().mapToInt(MealCartDto::getQuantity).sum();
         log.info("Calculated total item value is : " + total);
         return total;
+
+    }
+
+    public void buyItems() {
 
     }
 }
