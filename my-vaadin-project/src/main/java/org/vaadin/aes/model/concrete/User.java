@@ -2,6 +2,8 @@ package org.vaadin.aes.model.concrete;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -22,9 +24,26 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
     @Column(name = "phone_no")
     private String phoneNo;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Address> addressList;
+
+    public User() {
+    }
+
+    public User(Long id, String firstName, String lastName, String username, String password, String email, String phoneNo, List<Address> addressList) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNo = phoneNo;
+        this.addressList = addressList;
+    }
 
     public Long getId() {
         return id;
@@ -82,6 +101,14 @@ public class User {
         this.phoneNo = phoneNo;
     }
 
+    public List<Address> getAddressList() {
+        return addressList;
+    }
+
+    public void setAddressList(List<Address> addressList) {
+        this.addressList = addressList;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -92,6 +119,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNo='" + phoneNo + '\'' +
+                ", addressList=" + addressList +
                 '}';
     }
 }

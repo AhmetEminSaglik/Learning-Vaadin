@@ -11,19 +11,19 @@ Database:
 user, address, meal, meal_price, payment, payment_method
 
 User.db:
-    - int id;
-    - String firstName;
-    - String lastName;
-    - String username;
-    - String password;
-    - String email;
-    - String phoneNo;
+    + int id;
+    + String firstName;
+    + String lastName;
+    + String username;
+    + String password;
+    + String email;
+    + String phoneNo;
     - int id Address
 
 Address.db:
-    - int id;
-    - String City
-    - String Street
+    + int id;
+    + String City
+    + String Street
 
 Meal.db:
     - int id;
@@ -38,18 +38,19 @@ Meal_price.db
     - createdAt TIMESTAMP;  (last date is the preferred price)
 
 Order.db
-    - int id
-    - int payment_id (Foreign Key)
-    - int meal_id
+    + int id
+    + Payment payment  //int payment_id (Foreign Key)
+    + Address address
+    - List meal_id
     - createdAt TIMESTAMP;
 
 Payment.db
-    - int id;
-    - int meal_id (Foreign Key)
-    - double total;
-    - int payment_method (Foreign Key)
+    + int id;
+    + Order order                 // int order_id (Foreign Key)
+    + double total;
+    + PaymentMethod paymentMethod // int payment_method (Foreign Key)
 
 Payment_method.db
-    - int id;
-    - String name;
+    + int id;
+    + String name;
 

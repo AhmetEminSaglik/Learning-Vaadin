@@ -12,6 +12,11 @@ public class MealCartDto implements Comparable<MealCartDto> {
         this.quantity = quantity;
     }
 
+    @Override
+    public int compareTo(MealCartDto o) {
+        return this.meal.getName().compareTo(o.meal.getName());
+    }
+
     public Meal getMeal() {
         return meal;
     }
@@ -44,8 +49,5 @@ public class MealCartDto implements Comparable<MealCartDto> {
                 '}';
     }
 
-    @Override
-    public int compareTo(MealCartDto o) {
-        return this.meal.getName().compareTo(o.meal.getName());
-    }
+
 }

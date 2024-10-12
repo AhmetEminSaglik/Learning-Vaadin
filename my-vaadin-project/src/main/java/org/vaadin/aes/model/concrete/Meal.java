@@ -1,13 +1,17 @@
 package org.vaadin.aes.model.concrete;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.vaadin.aes.model.dto.MealCartDto;
+import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class Meal implements  Comparable<Meal> {
+import java.util.ArrayList;
+import java.util.List;
 
+@Entity
+@Table(name = "meals")
+public class Meal implements Comparable<Meal> {
+
+    private static final Logger log = LoggerFactory.getLogger(Meal.class);
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -15,11 +19,36 @@ public class Meal implements  Comparable<Meal> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "price")
-    private double price;
+    @OneToMany(mappedBy = "meal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MealPrice> priceList;
 
     @Column(name = "thumbnail")
     private String thumbnail;
+
+    @Override
+    public int compareTo(Meal o) {
+        return this.getName().compareTo(o.getName());
+    }
+
+    public double getPrice() {
+        if (priceList != null) {
+            return priceList.get(priceList.size() - 1).getPrice();
+        }
+        return -1.00;
+    }
+
+    public void setPrice(double price) {
+        log.info("Price (" + price + ") will be set To " + this);
+        if (priceList != null) {
+            priceList = new ArrayList<>();
+        }
+        MealPrice mealPrice = new MealPrice();
+        mealPrice.setMeal(this);
+        mealPrice.setPrice(price);
+        priceList.add(mealPrice);
+        log.info("Price is added: " + getPrice());
+    }
+
 
     public Long getId() {
         return id;
@@ -37,14 +66,6 @@ public class Meal implements  Comparable<Meal> {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public String getThumbnail() {
         return thumbnail;
     }
@@ -53,17 +74,14 @@ public class Meal implements  Comparable<Meal> {
         this.thumbnail = thumbnail;
     }
 
+
     @Override
     public String toString() {
         return "Meal{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", price=" + price +
+                ", price=" + getPrice() +
                 ", thumbnail='" + thumbnail + '\'' +
                 '}';
-    }
-    @Override
-    public int compareTo(Meal o) {
-        return this.getName().compareTo(o.getName());
     }
 }

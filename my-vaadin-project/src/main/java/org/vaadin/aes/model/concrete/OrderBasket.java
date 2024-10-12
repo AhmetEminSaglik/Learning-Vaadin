@@ -28,4 +28,12 @@ public class OrderBasket {
         return user;
     }
 
+    @Override
+    public String toString() {
+        return "OrderBasket{" +
+                "mealCartDto=" + mealCartDto +
+                ", totalPrice=" + totalPrice +
+                ", user=" + user +
+                '}';
+    }
 }
