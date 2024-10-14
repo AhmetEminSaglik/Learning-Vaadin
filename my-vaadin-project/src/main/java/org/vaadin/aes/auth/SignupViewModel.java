@@ -1,7 +1,7 @@
 package org.vaadin.aes.auth;
 
 import org.vaadin.aes.model.concrete.User;
-import org.vaadin.aes.service.user.AuthenticationService;
+import org.vaadin.aes.service.abstracts.user.AuthenticationService;
 
 import java.util.logging.Logger;
 

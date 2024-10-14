@@ -1,11 +1,9 @@
 package org.vaadin.aes.auth;
 
 import com.vaadin.flow.component.HtmlContainer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H3;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.model.concrete.UserCredential;
-import org.vaadin.aes.service.user.AuthenticationService;
+import org.vaadin.aes.service.abstracts.user.AuthenticationService;
 
 import java.util.logging.Logger;
 
