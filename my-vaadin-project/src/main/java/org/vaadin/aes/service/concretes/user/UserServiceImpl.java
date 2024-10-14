@@ -1,22 +1,23 @@
-package org.vaadin.aes.service.user;
+package org.vaadin.aes.service.concretes.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.model.concrete.UserCredential;
 import org.vaadin.aes.repository.abstracts.UserRepository;
+import org.vaadin.aes.service.abstracts.user.UserService;
 
 import java.util.logging.Logger;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
-    private static final Logger log = Logger.getLogger(UserService.class.getName());
+    private static final Logger log = Logger.getLogger(UserServiceImpl.class.getName());
 
     private UserRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
         log.info("UserRepository is initialized: " + userRepository);
     }
