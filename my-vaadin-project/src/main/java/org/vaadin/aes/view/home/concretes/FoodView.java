@@ -6,10 +6,11 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.Meal;
-import org.vaadin.aes.model.dto.MealCartDto;
+import org.vaadin.aes.model.dto.Order;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.CustomHtmlComponents;
@@ -19,19 +20,20 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Route("food-page")
+@PageTitle("Food Page")
 public class FoodView extends AbstractLayoutView {
     private static final Logger log = Logger.getLogger(FoodView.class.getName());
     private final FoodViewModel viewModel;
     private OrderBasketView orderBasketView = new OrderBasketView();
     private final Grid<Meal> gridAllMeals = new Grid<>(Meal.class);
-    private final Grid<MealCartDto> gridCustomerMeals = new Grid<>(MealCartDto.class);
+    private final Grid<Order> gridCustomerMeals = new Grid<>(Order.class);
 
     public FoodView() {
         super(EnumPageURL.FOOD_PAGE);
         viewModel = new FoodViewModel(this);
         addOrderBasketToHeader();
         VerticalLayout allMealLayout = createAllMealLayout("All Meals", viewModel.getMeals());
-        VerticalLayout customerMealLayout = createCustomerMealLayout("My Meals", orderBasketView.getMealCartDtoList());
+        VerticalLayout customerMealLayout = createCustomerMealLayout("My Meals", orderBasketView.getOrderList());
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
@@ -66,7 +68,7 @@ public class FoodView extends AbstractLayoutView {
         return verticalLayout;
     }
 
-    private VerticalLayout createCustomerMealLayout(String title, List<MealCartDto> meals) {
+    private VerticalLayout createCustomerMealLayout(String title, List<Order> meals) {
         VerticalLayout verticalLayout = createLayoutWithName(title);
 //        verticalLayout.setHeightFull();
 //        verticalLayout.setWidth("60%");
@@ -121,39 +123,22 @@ public class FoodView extends AbstractLayoutView {
         return button;
     }
 
-    private VerticalLayout createQuantityAndPriceGridComponent(MealCartDto mealCartDto) {
-        int quantity = mealCartDto.getQuantity();
-        double price = mealCartDto.getMeal().getPrice();
+    private VerticalLayout createQuantityAndPriceGridComponent(Order Order) {
+        int quantity = Order.getQuantity();
+        double price = Order.getMeal().getPrice();
         double totalPrice = price * quantity;
 
         VerticalLayout verticalLayout = new VerticalLayout();
         verticalLayout.setWidthFull();
 
-
-//        Span paragQuantity = new Span("Quantity : " + totalPrice);
-//        String quantityText = "Quantity : " + quantity;
-//        paragQuantity.getStyle().set("font-weight", "bold");
-//        paragQuantity.getStyle().set("font-size", "15px");
-
-//        Span paragPrice = new Span("Price : " + totalPrice);
-//        String priceText = "Price : " + price;
-//        paragPrice.getStyle().set("font-weight", "bold");
-//        paragPrice.getStyle().set("font-size", "15px");
-//        String quantityMultiplyPrice = quantity + " x " + price;
         Span spanQuantityMultiplyPrice = new Span(quantity + " x " + price);
         Span spanQuantityMultiplyPrice2 = new Span(price + " x " + quantity);
-//        Span paragTotalprice = new Span("total price: " + totalPrice);
         Span paragTotalprice = new Span(CashFormatUtil.convertTL(totalPrice));
 
         paragTotalprice.getStyle().set("font-weight", "bold");
         paragTotalprice.getStyle().set("font-size", "15px");
-
-//        verticalLayout.add(quantityText);
-//        verticalLayout.add(new HtmlComponent("br"));
-//        verticalLayout.add(priceText);
         verticalLayout.add(spanQuantityMultiplyPrice);
         verticalLayout.add(spanQuantityMultiplyPrice2);
-//        verticalLayout.add(new HtmlComponent("br"));
         verticalLayout.add(paragTotalprice);
         return verticalLayout;
     }
@@ -239,7 +224,7 @@ public class FoodView extends AbstractLayoutView {
         return gridAllMeals;
     }
 
-    public Grid<MealCartDto> getGridCustomerMeals() {
+    public Grid<Order> getGridCustomerMeals() {
         return gridCustomerMeals;
     }
 }

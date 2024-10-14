@@ -10,7 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.model.concrete.User;
-import org.vaadin.aes.service.user.AuthenticationService;
+import org.vaadin.aes.service.abstracts.user.AuthenticationService;
 import org.vaadin.aes.auth.SignupViewModel;
 
 import java.util.stream.Stream;

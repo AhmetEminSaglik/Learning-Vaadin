@@ -41,6 +41,7 @@ public abstract class AbstractLayoutView extends VerticalLayout implements Befor
         return body;
     }
 
+    // 14.10.2024 toplantida konusuldu
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
 //        if(!isUserLoggedIn()){

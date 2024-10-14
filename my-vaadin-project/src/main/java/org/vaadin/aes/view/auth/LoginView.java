@@ -18,14 +18,14 @@ import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.model.concrete.UserCredential;
 import org.vaadin.aes.model.dto.UserDataDto;
 import org.vaadin.aes.model.mapper.UserMapper;
-import org.vaadin.aes.service.user.AuthenticationService;
+import org.vaadin.aes.service.abstracts.user.AuthenticationService;
 import org.vaadin.aes.auth.LoginViewModel;
 import org.vaadin.aes.auth.SignupViewModel;
 
 import java.util.stream.Stream;
 
 @Route("login")
-@PageTitle("Sign up  | Food App")
+@PageTitle("Login Page")
 public class LoginView extends VerticalLayout {
 
     private static final Logger log = LoggerFactory.getLogger(LoginView.class);

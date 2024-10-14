@@ -5,13 +5,16 @@ import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
-import org.vaadin.aes.model.dto.MealCartDto;
+import org.vaadin.aes.model.dto.Order;
 import org.vaadin.aes.model.dto.UserDataDto;
+import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.cssdesign.CssDesign;
 import viewmodel.home.OrderBasketViewModel;
 
@@ -26,15 +29,16 @@ public class OrderBasketView extends VerticalLayout {
 // o yuzden string'i geri html componentine cevrilecek
 
     //    private final HtmlContainer userNameText = new Paragraph();
-    private final Span spanTitle = new Span("My Cart");
+    private final HtmlContainer htmlContainerTitle = new H3("My Cart");
     //    private final Span spanTitle = new Span("My Cart");
     //    private int itemSize = 0;
-    private List<MealCartDto> mealCartDto = new ArrayList<>();
+    private List<Order> orderList = new ArrayList<>();
     private Button btnBuyAll = new Button("Buy All");
     private final OrderBasketViewModel viewModel = new OrderBasketViewModel(this);
     //    private final HtmlContainer total = new Paragraph("Total Item: " +0);
 //    private String total = "Total Item: " + 0;
-    private final Span spanTotal = new Span("Total Item: " + 0);
+    private double totalPrice = 0;
+    private final HtmlContainer htmlContainerTotalPrice = new Span("Total price: " + CashFormatUtil.convertTL(0));
 
     public OrderBasketView() {
 
@@ -66,17 +70,13 @@ public class OrderBasketView extends VerticalLayout {
 //        configureComponent(spanTitle);
 //        configureComponent(spanTotal);
 
-        btnBuyAll.setHeight("30px");
-        btnBuyAll.setWidth("50%");
-        btnBuyAll.getStyle().set("background-color", "#2bd617");
-        btnBuyAll.getStyle().set("color", "black");
 
         VerticalLayout innerLayout = new VerticalLayout();
         Div innerDiv = new Div();
         innerDiv.setWidthFull();
-        innerDiv.add(spanTitle);
+        innerDiv.add(htmlContainerTitle);
         innerDiv.add(new HtmlComponent("br"));
-        innerDiv.add(spanTotal);
+        innerDiv.add(htmlContainerTotalPrice);
 //        configureComponent(innerDiv);
         innerLayout.setSpacing(false);
         innerLayout.setHeightFull();
@@ -85,6 +85,7 @@ public class OrderBasketView extends VerticalLayout {
 
 //        innerLayout.add(spanTitle);
 //        innerLayout.add(spanTotal);
+        setActionBtnBuyAll(btnBuyAll);
         innerLayout.add(innerDiv);
         innerLayout.add(btnBuyAll);
 
@@ -121,16 +122,17 @@ public class OrderBasketView extends VerticalLayout {
         return viewModel;
     }
 
-    public List<MealCartDto> getMealCartDtoList() {
-        return mealCartDto;
+    public List<Order> getOrderList() {
+        return orderList;
     }
 
-    public void setTotal(int val) {
-        spanTotal.setText("Total Item: " + val);
+    public void setTotalPrice(double val) {
+        totalPrice = val;
+        htmlContainerTotalPrice.setText("Total Item: " + CashFormatUtil.convertTL(totalPrice));
     }
 
-    public String getTotal() {
-        return spanTotal.getText();
+    public double getTotalPrice() {
+        return totalPrice;
     }
 //    public HtmlContainer getTotal() {
 //        return total;
