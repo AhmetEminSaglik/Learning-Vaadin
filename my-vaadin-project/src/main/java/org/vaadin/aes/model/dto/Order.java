@@ -2,18 +2,18 @@ package org.vaadin.aes.model.dto;
 
 import org.vaadin.aes.model.concrete.Meal;
 
-public class MealCartDto implements Comparable<MealCartDto> {
+public class Order implements Comparable<Order> {
     private Meal meal;
     private int quantity;
 
 
-    public MealCartDto(Meal meal, int quantity) {
+    public Order(Meal meal, int quantity) {
         this.meal = meal;
         this.quantity = quantity;
     }
 
     @Override
-    public int compareTo(MealCartDto o) {
+    public int compareTo(Order o) {
         return this.meal.getName().compareTo(o.meal.getName());
     }
 
@@ -43,7 +43,7 @@ public class MealCartDto implements Comparable<MealCartDto> {
 
     @Override
     public String toString() {
-        return "MealCartDto{" +
+        return "Order{" +
                 "meal=" + meal +
                 ", quantity=" + quantity +
                 '}';

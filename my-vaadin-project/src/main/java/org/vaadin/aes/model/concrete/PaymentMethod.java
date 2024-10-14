@@ -21,6 +21,10 @@ public class PaymentMethod {
         this.name = name;
     }
 
+    public PaymentMethod(String name) {
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

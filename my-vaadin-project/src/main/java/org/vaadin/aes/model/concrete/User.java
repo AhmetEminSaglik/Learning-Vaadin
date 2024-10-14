@@ -31,10 +31,13 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Address> addressList;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Payment> paymentList;
+
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, String email, String phoneNo, List<Address> addressList) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, String phoneNo, List<Address> addressList, List<Payment> paymentList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +46,7 @@ public class User {
         this.email = email;
         this.phoneNo = phoneNo;
         this.addressList = addressList;
+        this.paymentList = paymentList;
     }
 
     public Long getId() {
@@ -109,6 +113,14 @@ public class User {
         this.addressList = addressList;
     }
 
+    public List<Payment> getPaymentList() {
+        return paymentList;
+    }
+
+    public void setPaymentList(List<Payment> paymentList) {
+        this.paymentList = paymentList;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -119,7 +131,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNo='" + phoneNo + '\'' +
-                ", addressList=" + addressList +
+//                ", addressList=" + addressList +
                 '}';
     }
 }

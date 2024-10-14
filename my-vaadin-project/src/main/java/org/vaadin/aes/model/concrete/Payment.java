@@ -9,6 +9,10 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @OneToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
@@ -23,10 +27,51 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(Long id, Order order, double total, PaymentMethod paymentMethod) {
+    public Payment(Long id, User user, Order order, double total, PaymentMethod paymentMethod) {
         this.id = id;
+        this.user = user;
         this.order = order;
         this.total = total;
+        this.paymentMethod = paymentMethod;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public PaymentMethod getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 

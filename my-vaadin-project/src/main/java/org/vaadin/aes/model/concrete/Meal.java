@@ -39,7 +39,7 @@ public class Meal implements Comparable<Meal> {
 
     public void setPrice(double price) {
         log.info("Price (" + price + ") will be set To " + this);
-        if (priceList != null) {
+        if (priceList == null) {
             priceList = new ArrayList<>();
         }
         MealPrice mealPrice = new MealPrice();
