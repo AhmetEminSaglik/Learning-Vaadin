@@ -1,7 +1,11 @@
 package viewmodel.home;
 
+import com.nimbusds.jose.shaded.gson.Gson;
+import com.vaadin.flow.component.UI;
+import org.vaadin.aes.enums.EnumPageURL;
+import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.Meal;
-import org.vaadin.aes.model.dto.MealCartDto;
+import org.vaadin.aes.model.dto.Order;
 import org.vaadin.aes.view.home.concretes.OrderBasketView;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 
@@ -17,31 +21,31 @@ public class OrderBasketViewModel {
     }
 
     public void addItem(Meal meal) {
-        Optional<MealCartDto> existingMealCartDto = view.getMealCartDtoList()
+        Optional<Order> existingOrder = view.getOrderList()
                 .stream()
                 .filter(e -> e.getMeal().equals(meal))
                 .findFirst();
-        if (existingMealCartDto.isPresent()) {
-            existingMealCartDto.get().increaseQuantity();
+        if (existingOrder.isPresent()) {
+            existingOrder.get().increaseQuantity();
         } else {
-            MealCartDto newMealCartDto = new MealCartDto(meal, 1);
-            view.getMealCartDtoList().add(newMealCartDto);
+            Order newOrder = new Order(meal, 1);
+            view.getOrderList().add(newOrder);
         }
 
         updateCartItemSize();
     }
 
     public void removeItem(Meal meal) {
-        Optional<MealCartDto> existingMealCartDto = view.getMealCartDtoList()
+        Optional<Order> existingOrder = view.getOrderList()
                 .stream()
                 .filter(e -> e.getMeal().equals(meal))
                 .findFirst();
-        if (existingMealCartDto.isPresent()) {
-            MealCartDto mealCartDto = existingMealCartDto.get();
-            if (mealCartDto.getQuantity() > 1) {
-                mealCartDto.decreaseQuantity();
+        if (existingOrder.isPresent()) {
+            Order Order = existingOrder.get();
+            if (Order.getQuantity() > 1) {
+                Order.decreaseQuantity();
             } else {
-                view.getMealCartDtoList().remove(mealCartDto);
+                view.getOrderList().remove(Order);
             }
         } else {
             CustomNotification.show(getClass().getSimpleName() + " Meal not found : " + meal.getName() + " - " + meal.getThumbnail());
@@ -50,18 +54,34 @@ public class OrderBasketViewModel {
     }
 
     private void updateCartItemSize() {
-        view.setTotal(calculateTotalItemInOrderBasket());
-        view.getMealCartDtoList().forEach(meal -> log.info("Current items in Customer's Cart: " + meal));
+        view.setTotalPrice(calculateTotalPriceInOrderBasket());
+        view.getOrderList().forEach(meal -> log.info("Current items in Customer's Cart: " + meal));
     }
 
     private int calculateTotalItemInOrderBasket() {
-        int total = view.getMealCartDtoList().stream().mapToInt(MealCartDto::getQuantity).sum();
+        int total = view.getOrderList().stream().mapToInt(Order::getQuantity).sum();
         log.info("Calculated total item value is : " + total);
         return total;
 
     }
 
-    public void buyItems() {
+    private double calculateTotalPriceInOrderBasket() {
+        double total = view.getOrderList()
+                .stream()
+                .mapToDouble(tmp -> tmp.getMeal().getPrice() * tmp.getQuantity()).sum();
+        log.info("Calculated total price in order basket is : " + total);
+        return total;
 
+    }
+
+    public void buyItems() {
+//        String orderJson = serializeOrderToJson(view.getOrderList());
+        UI.getCurrent().getSession().setAttribute(EnumSessionData.ORDER_LIST.getName(),view.getOrderList());
+        UI.getCurrent().navigate(EnumPageURL.PAYMENT_METHOD.getUrl());
+    }
+    private String serializeOrderToJson(Order order) {
+        // Order nesnesini JSON formatına çevirme işlemini gerçekleştirin
+        // (Bu işlem için bir JSON kütüphanesi kullanabilirsiniz, örneğin Gson)
+        return new Gson().toJson(order);
     }
 }
