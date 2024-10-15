@@ -1,11 +1,11 @@
 package viewmodel.home.payment.form;
 
-import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.textfield.NumberField;
+import com.vaadin.flow.component.textfield.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.service.abstracts.payment.PaymentService;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 import org.vaadin.aes.view.home.concretes.payment.form.CreditCardFormView;
@@ -23,7 +23,7 @@ public class CreditCardFormViewModel {
         this.view = view;
     }
 
-    public void processBtnGiveOrder() {
+    /*public void processBtnGiveOrder() {
         if (isFilledAllData()) {
             navigateToPaymentPageWithThread();
         } else {
@@ -32,11 +32,6 @@ public class CreditCardFormViewModel {
 
         }
     }
-
-    private void savePayment() {
-
-    }
-
     private void navigateToPaymentPageWithThread() {
         String msg = "Successfully ordered.";
         CustomNotification.show(msg);
@@ -48,27 +43,39 @@ public class CreditCardFormViewModel {
             log.info("Payment Page'e geçiş yapıldı");
         });
 
-    }
+    }*/
 
-    private boolean isFilledAllData() {
-        try {
-            if (!isDataValid(view.getTxtFieldCreditCardOwnerName().getValue().toString())
-                    || !isDataValid(view.getNumFieldCreditCardNo().getValue().toString())
-                    || !isDataValid(view.getNumFieldPhoneNo().getValue().toString())
-            )
-                return false;
-
-        } catch (NullPointerException e) {
-            return false;
-        }
-        return true;
-
-    }
-
-    private boolean isDataValid(String value) {
-        if (value != null && !value.isBlank()) {
+    public boolean isFilledAllData() {
+        if (isDataValid(view.getTxtFieldCreditCardOwnerName())
+                && isDataValid(view.getTxtFieldCreditCardNo())
+                && isDataValid(view.getTxtFieldPhoneNo())
+        ) {
             return true;
         }
+
+        return false;
+
+    }
+
+    private boolean isDataValid(NumberField field) {
+        try {
+            if (field.getValue() <= 100) {
+                return true;
+            }
+        } catch (Exception e) {
+            log.info("Error occured: "+e.getMessage());
+        }
+        CustomNotification.show("Please fill " + field.getLabel());
+        return false;
+
+    }
+
+    private boolean isDataValid(TextField field) {
+        if (field != null
+                && !field.getValue().isBlank()) {
+            return true;
+        }
+        CustomNotification.show("Please fill " + field.getLabel());
         return false;
     }
 }
