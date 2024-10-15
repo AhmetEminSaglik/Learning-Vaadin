@@ -1,0 +1,69 @@
+---> Sadece iki sinif kullanarak 3 tablo bu sekilde oluşturulabiliyor.
+------------------------------------------------------------------------------
+
+
+package org.vaadin.aes.model.concrete;
+
+import jakarta.persistence.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "meals")
+public class Meal  {
+
+    private static final Logger log = LoggerFactory.getLogger(Meal.class);
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @ManyToMany(mappedBy = "mealList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private List<Order> orderList;
+
+    @OneToMany(mappedBy = "meal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<MealPrice> priceList;
+
+    @Column(name = "thumbnail")
+    private String thumbnail;
+
+ }
+
+
+
+@Entity
+@Table(name = "orders")
+public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToOne
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(name = "order_concepts",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "meal_id")
+    )
+    private List<Meal> mealList;
+
+    @OneToOne(mappedBy = "order")
+    private Payment payment;
+
+    @Column(name = "createdAt")
+    private Timestamp createdAt;
+}
+
+

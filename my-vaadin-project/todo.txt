@@ -54,3 +54,33 @@ Payment_method.db
     + int id;
     + String name;
 
+
+
+
+------------------------------------
+Her siparisin bir payment'i olmayabilir
+Her payment'in bir siparisi olmak zorunda
+
+Order.tbl'da payment_id colum'nu eklenir. ve payment verileri oraya kaydedilir
+Payment null olabilir.
+
+class Order {
+        @OneToOne
+        @JoinColumn(name = "payment_id")
+        private Payment payment;
+}
+
+
+Payment.tbl'da order verisi gorunmez, Java bunu Order clasindaki payment referansi
+ile verileri eslestirir.
+public class Payment {
+    // ...
+    @OneToOne(mappedBy = "payment")
+    private Order order;
+    // ...
+}
+
+
+"İlişkinin sahibi, veritabanındaki foreign key'i içeren taraftır." dedin
+burda, order.tbl'da payment_id'nin degerini icerdigi icin,
+Order-Payment arasindaki iliskide, Order, Payment'in sahibi mi oluyor?
