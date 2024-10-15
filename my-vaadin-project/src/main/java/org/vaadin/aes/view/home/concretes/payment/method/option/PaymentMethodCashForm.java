@@ -4,24 +4,26 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.Hr;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 import org.vaadin.aes.view.home.concretes.PaymentView;
+import viewmodel.home.service.OrderPurchaseValidator;
 
 
-public class PaymentMethodCashForm extends Div {
+public class PaymentMethodCashForm extends Div implements OrderPurchaseValidator {
 
-    private Button btnPay = new Button("Give Order");
+//    private Button btnPay = new Button("Give Order");
 
     public PaymentMethodCashForm() {
         setClassName("design-card");
         add(new H2("Pay with Cash"));
-
-        btnPay.addClickListener(e -> {
-            showUpSuccessfullyNotification();
-            UI.getCurrent().navigate(PaymentView.class);
-        });
-
-        add(btnPay);
+        add(new Hr());
+//        btnPay.addClickListener(e -> {
+//            showUpSuccessfullyNotification();
+//            UI.getCurrent().navigate(PaymentView.class);
+//        });
+//
+//        add(btnPay);
     }
 
     public void activate() {
@@ -35,6 +37,11 @@ public class PaymentMethodCashForm extends Div {
     private void showUpSuccessfullyNotification() {
         String msg = "Order has been successfully created.";
         CustomNotification.show(msg);
+    }
+
+    @Override
+    public boolean isValid() {
+        return true;
     }
 }
 

@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 
 public abstract class AbstractLayoutView extends VerticalLayout implements BeforeEnterObserver {
     private static final Logger log = Logger.getLogger(AbstractLayoutView.class.getName());
-//    private EnumPageURL enumPageURL;
+    //    private EnumPageURL enumPageURL;
     protected LeftDrawer leftDrawer = new LeftDrawer();
     protected CustomHeader customHeader;
     private final VerticalLayout body = new VerticalLayout();
@@ -33,7 +33,12 @@ public abstract class AbstractLayoutView extends VerticalLayout implements Befor
         unionDrawerWithBody.add(leftDrawer);
         unionDrawerWithBody.add(body);
         add(unionDrawerWithBody);
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
 
+        body.setJustifyContentMode(JustifyContentMode.CENTER);
+        body.setAlignItems(Alignment.CENTER);
+        body.setSpacing(false);
 
     }
 
@@ -50,7 +55,8 @@ public abstract class AbstractLayoutView extends VerticalLayout implements Befor
 //        }
 
     }
-    private  boolean isUserLoggedIn(){
+
+    private boolean isUserLoggedIn() {
         UserDataDto userData = (UserDataDto) VaadinSession.getCurrent().getAttribute(EnumDTO.USER_DATA.getName());
         log.info("Found UserData: " + userData);
         if (userData == null) {

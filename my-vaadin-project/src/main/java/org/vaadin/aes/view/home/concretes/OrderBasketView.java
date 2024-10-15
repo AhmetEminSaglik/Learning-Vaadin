@@ -5,14 +5,13 @@ import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
-import org.vaadin.aes.model.dto.Order;
+import org.vaadin.aes.model.concrete.OrderConcept;
 import org.vaadin.aes.model.dto.UserDataDto;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.cssdesign.CssDesign;
@@ -32,7 +31,7 @@ public class OrderBasketView extends VerticalLayout {
     private final HtmlContainer htmlContainerTitle = new H3("My Cart");
     //    private final Span spanTitle = new Span("My Cart");
     //    private int itemSize = 0;
-    private List<Order> orderList = new ArrayList<>();
+    private List<OrderConcept> orderConceptList = new ArrayList<>();
     private Button btnBuyAll = new Button("Buy All");
     private final OrderBasketViewModel viewModel = new OrderBasketViewModel(this);
     //    private final HtmlContainer total = new Paragraph("Total Item: " +0);
@@ -122,8 +121,8 @@ public class OrderBasketView extends VerticalLayout {
         return viewModel;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
+    public List<OrderConcept> getOrderConceptList() {
+        return orderConceptList;
     }
 
     public void setTotalPrice(double val) {

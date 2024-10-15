@@ -10,7 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.Meal;
-import org.vaadin.aes.model.dto.Order;
+import org.vaadin.aes.model.concrete.OrderConcept;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.CustomHtmlComponents;
@@ -26,14 +26,14 @@ public class FoodView extends AbstractLayoutView {
     private final FoodViewModel viewModel;
     private OrderBasketView orderBasketView = new OrderBasketView();
     private final Grid<Meal> gridAllMeals = new Grid<>(Meal.class);
-    private final Grid<Order> gridCustomerMeals = new Grid<>(Order.class);
+    private final Grid<OrderConcept> gridCustomerMeals = new Grid<>(OrderConcept.class);
 
     public FoodView() {
         super(EnumPageURL.FOOD_PAGE);
         viewModel = new FoodViewModel(this);
         addOrderBasketToHeader();
         VerticalLayout allMealLayout = createAllMealLayout("All Meals", viewModel.getMeals());
-        VerticalLayout customerMealLayout = createCustomerMealLayout("My Meals", orderBasketView.getOrderList());
+        VerticalLayout customerMealLayout = createCustomerMealLayout("My Meals", orderBasketView.getOrderConceptList());
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
@@ -68,7 +68,7 @@ public class FoodView extends AbstractLayoutView {
         return verticalLayout;
     }
 
-    private VerticalLayout createCustomerMealLayout(String title, List<Order> meals) {
+    private VerticalLayout createCustomerMealLayout(String title, List<OrderConcept> meals) {
         VerticalLayout verticalLayout = createLayoutWithName(title);
 //        verticalLayout.setHeightFull();
 //        verticalLayout.setWidth("60%");
@@ -123,7 +123,7 @@ public class FoodView extends AbstractLayoutView {
         return button;
     }
 
-    private VerticalLayout createQuantityAndPriceGridComponent(Order Order) {
+    private VerticalLayout createQuantityAndPriceGridComponent(OrderConcept Order) {
         int quantity = Order.getQuantity();
         double price = Order.getMeal().getPrice();
         double totalPrice = price * quantity;
@@ -224,7 +224,7 @@ public class FoodView extends AbstractLayoutView {
         return gridAllMeals;
     }
 
-    public Grid<Order> getGridCustomerMeals() {
+    public Grid<OrderConcept> getGridCustomerMeals() {
         return gridCustomerMeals;
     }
 }

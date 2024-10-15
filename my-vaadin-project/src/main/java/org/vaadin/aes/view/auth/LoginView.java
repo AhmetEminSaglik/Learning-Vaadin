@@ -2,6 +2,7 @@ package org.vaadin.aes.view.auth;
 
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
+import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.model.concrete.UserCredential;
 import org.vaadin.aes.model.dto.UserDataDto;
@@ -43,6 +45,7 @@ public class LoginView extends VerticalLayout {
     public LoginView(AuthenticationService authenticationService) {
         loginViewModel = new LoginViewModel(authenticationService, userFeedBack);
         btnNavigateSignup.addClickListener(event -> {
+
             // Diğer görünümün adı (örneğin, "anotherView" veya "viewName")
             getUI().ifPresent(ui -> ui.navigate("signup"));
         });
@@ -70,7 +73,7 @@ public class LoginView extends VerticalLayout {
                 User user = loginViewModel.login(cred);
                 if (user != null) {
                     UserDataDto userData = UserMapper.userToUserDataDto(user);
-
+                    UI.getCurrent().getSession().setAttribute(EnumSessionData.USER_DATA.getName(),user);
                     VaadinSession.getCurrent().setAttribute(EnumDTO.USER_DATA.getName(), userData);
                     log.info("Loggin successfully: saved user data in " + EnumDTO.USER_DATA.getName() + " as : " + userData);
                     getUI().ifPresent(ui -> ui.navigate(EnumPageURL.FOOD_PAGE.getUrl()));

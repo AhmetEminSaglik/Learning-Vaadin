@@ -1,19 +1,19 @@
 package org.vaadin.aes.view.home.concretes.payment.form;
 
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
 import viewmodel.home.payment.form.CreditCardFormViewModel;
+import viewmodel.home.service.OrderPurchaseValidator;
 
 
-public class CreditCardFormView extends VerticalLayout {
+public class CreditCardFormView extends VerticalLayout implements OrderPurchaseValidator {
 
     private final CreditCardFormViewModel viewModel = new CreditCardFormViewModel(this);
     private final TextField txtFieldCreditCardOwnerName = new TextField();
-    private final NumberField numFieldCreditCardNo = new NumberField();
-    private final NumberField numFieldPhoneNo = new NumberField();
-    private final Button btnPay = new Button("Give Order");
+    private final TextField txtFieldCreditCardNo = new TextField();
+    private final TextField txtFieldPhoneNo = new TextField();
+//    private final Button btnPay = new Button("Give Order");
 
     public CreditCardFormView() {
 
@@ -21,33 +21,38 @@ public class CreditCardFormView extends VerticalLayout {
         txtFieldCreditCardOwnerName.setRequiredIndicatorVisible(true);
         txtFieldCreditCardOwnerName.setErrorMessage("This field is required");
 
-        numFieldCreditCardNo.setLabel("Credit Card No");
-        numFieldCreditCardNo.setRequiredIndicatorVisible(true);
-        numFieldCreditCardNo.setErrorMessage("This field is required");
+        txtFieldCreditCardNo.setLabel("Credit Card No");
+        txtFieldCreditCardNo.setRequiredIndicatorVisible(true);
+        txtFieldCreditCardNo.setErrorMessage("This field is required");
 
-        numFieldPhoneNo.setLabel("Phone number");
-        numFieldPhoneNo.setRequiredIndicatorVisible(true);
-        numFieldPhoneNo.setHelperText("Include country and area prefixes");
+        txtFieldPhoneNo.setLabel("Phone number");
+        txtFieldPhoneNo.setRequiredIndicatorVisible(true);
+        txtFieldPhoneNo.setHelperText("Include city  and area prefixes");
 
 
-        btnPay.addClickListener(e -> {
-            viewModel.processBtnGiveOrder();
-        });
+//        btnPay.addClickListener(e -> {
+//            viewModel.processBtnGiveOrder();
+//        });
 
         setSizeFull();
 
-        add(txtFieldCreditCardOwnerName, numFieldCreditCardNo, numFieldPhoneNo, btnPay);
+        add(txtFieldCreditCardOwnerName, txtFieldCreditCardNo, txtFieldPhoneNo);
     }
 
     public TextField getTxtFieldCreditCardOwnerName() {
         return txtFieldCreditCardOwnerName;
     }
 
-    public NumberField getNumFieldCreditCardNo() {
-        return numFieldCreditCardNo;
+    public TextField getTxtFieldCreditCardNo() {
+        return txtFieldCreditCardNo;
     }
 
-    public NumberField getNumFieldPhoneNo() {
-        return numFieldPhoneNo;
+    public TextField getTxtFieldPhoneNo() {
+        return txtFieldPhoneNo;
+    }
+
+    @Override
+    public boolean isValid() {
+        return viewModel.isFilledAllData();
     }
 }
