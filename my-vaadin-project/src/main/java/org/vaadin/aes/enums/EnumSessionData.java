@@ -1,7 +1,11 @@
 package org.vaadin.aes.enums;
 
 public enum EnumSessionData {
-    ORDER_LIST("orderList");
+    USER_DATA("user"),
+    PAYMENT_METHOD("payment_method"),
+    ORDER_CONCEPT_LIST("orderConceptList"),
+    PAYMENT("payment"),
+    ORDER("order"),;
     private final String name;
 
     EnumSessionData(String name) {

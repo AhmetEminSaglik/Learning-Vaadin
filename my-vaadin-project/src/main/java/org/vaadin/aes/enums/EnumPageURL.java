@@ -6,7 +6,8 @@ public enum EnumPageURL {
     FOOD_PAGE("Food Page", "food-page","images/food.jpg"),
     PROFILE("Profile Page", "profile","images/profile.png"),
     PAYMENT("Payment Page", "payment","images/dollar.png"),
-    PAYMENT_METHOD("Payment Method Page", "payment-method","images/payment-method.jpg");
+    PAYMENT_METHOD("Payment Method Page", "payment-method","images/payment-method.jpg"),
+    ONLINE_PURCHASE("Online Purchase Page", "online-purchasing","images/payment-method.jpg");
 
     private final String name;
     private final String url;
