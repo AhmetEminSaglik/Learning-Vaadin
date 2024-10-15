@@ -1,11 +1,14 @@
+/*
 package org.vaadin.aes.model.dto;
 
 import org.vaadin.aes.model.concrete.Meal;
+import org.vaadin.aes.model.concrete.OrderConcept;
 
 public class Order implements Comparable<Order> {
     private Meal meal;
     private int quantity;
 
+    OrderConcept t=new OrderConcept();
 
     public Order(Meal meal, int quantity) {
         this.meal = meal;
@@ -51,3 +54,4 @@ public class Order implements Comparable<Order> {
 
 
 }
+*/

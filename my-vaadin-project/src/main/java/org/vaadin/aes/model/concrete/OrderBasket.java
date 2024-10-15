@@ -2,18 +2,17 @@ package org.vaadin.aes.model.concrete;
 
 import com.vaadin.flow.server.VaadinSession;
 import org.vaadin.aes.enums.EnumDTO;
-import org.vaadin.aes.model.dto.Order;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderBasket {
-    private List<Order> Order = new ArrayList<>();
+    private List<OrderConcept> orderConcepts = new ArrayList<>();
     private double totalPrice;
     private User user = (User) VaadinSession.getCurrent().getAttribute(EnumDTO.USER_DATA.getName());
 
-    public List<Order> getMeals() {
-        return Order;
+    public List<OrderConcept> getOrderConcepts() {
+        return orderConcepts;
     }
 
     public double getTotalPrice() {
@@ -31,7 +30,7 @@ public class OrderBasket {
     @Override
     public String toString() {
         return "OrderBasket{" +
-                "Order=" + Order +
+                "OrderConcept=" + orderConcepts +
                 ", totalPrice=" + totalPrice +
                 ", user=" + user +
                 '}';

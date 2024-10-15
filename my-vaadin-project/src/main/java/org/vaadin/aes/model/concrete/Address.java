@@ -2,6 +2,8 @@ package org.vaadin.aes.model.concrete;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -15,18 +17,25 @@ public class Address {
     @Column(name = "street")
     private String street;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    //    @ManyToOne
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
+//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+//    @JoinTable(name = "user_address",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "address_id")
+//    )
+//    private List<User> userList;
+
 
     public Address() {
     }
 
-    public Address(Long id, String city, String street, User user) {
+    public Address(Long id, String city, String street/*, List<User> userList*/) {
         this.id = id;
         this.city = city;
         this.street = street;
-        this.user = user;
+//        this.userList = userList;
     }
 
     public Long getId() {
@@ -53,13 +62,14 @@ public class Address {
         this.street = street;
     }
 
-    public User getUser() {
-        return user;
+    /*public List<User> getUserList() {
+        return userList;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
     }
+*/
     @Override
     public String toString() {
         return "Address{" +

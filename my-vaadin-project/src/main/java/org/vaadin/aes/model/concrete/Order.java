@@ -13,17 +13,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @OneToOne
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-//    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private List<Meal> mealList;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderConcept> orderConcepts;
 
-    @OneToOne
-    @JoinColumn(name = "payment_id", nullable = false)
+    @OneToOne(mappedBy = "order")
     private Payment payment;
 
     @Column(name = "createdAt")
@@ -32,10 +33,11 @@ public class Order {
     public Order() {
     }
 
-    public Order(Long id, Address address, List<Meal> mealList, Payment payment, Timestamp createdAt) {
+    public Order(Long id, User user, Address address, List<OrderConcept> orderConcepts, Payment payment, Timestamp createdAt) {
         this.id = id;
+        this.user = user;
         this.address = address;
-        this.mealList = mealList;
+        this.orderConcepts = orderConcepts;
         this.payment = payment;
         this.createdAt = createdAt;
     }
@@ -48,6 +50,14 @@ public class Order {
         this.id = id;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Address getAddress() {
         return address;
     }
@@ -56,12 +66,12 @@ public class Order {
         this.address = address;
     }
 
-    public List<Meal> getMealList() {
-        return mealList;
+    public List<OrderConcept> getOrderConcepts() {
+        return orderConcepts;
     }
 
-    public void setMealList(List<Meal> mealList) {
-        this.mealList = mealList;
+    public void setOrderConcepts(List<OrderConcept> orderConcepts) {
+        this.orderConcepts = orderConcepts;
     }
 
     public Payment getPayment() {
@@ -84,10 +94,12 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
+                ", user=" + user +
                 ", address=" + address +
-                ", mealList=" + mealList +
+                ", orderConcepts=" + orderConcepts +
                 ", payment=" + payment +
                 ", createdAt=" + createdAt +
                 '}';
     }
 }
+

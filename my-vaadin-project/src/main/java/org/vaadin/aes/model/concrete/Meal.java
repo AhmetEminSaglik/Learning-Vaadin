@@ -19,6 +19,9 @@ public class Meal implements Comparable<Meal> {
     @Column(name = "name")
     private String name;
 
+    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderConcept> orderConcepts;
+
     @OneToMany(mappedBy = "meal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<MealPrice> priceList;
 

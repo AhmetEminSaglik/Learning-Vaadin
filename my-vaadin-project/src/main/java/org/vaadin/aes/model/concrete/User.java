@@ -28,16 +28,19 @@ public class User {
     @Column(name = "phone_no")
     private String phoneNo;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Address> addressList;
+//    @ManyToMany(mappedBy = "userList", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+//    private List<Address> address;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Payment> paymentList;
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<Address> addressList;
+
+//    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private List<Payment> paymentList;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, String email, String phoneNo, List<Address> addressList, List<Payment> paymentList) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, String phoneNo/*, List<Address> address*/) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -45,8 +48,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.phoneNo = phoneNo;
-        this.addressList = addressList;
-        this.paymentList = paymentList;
+//        this.address = address;
     }
 
     public Long getId() {
@@ -105,22 +107,31 @@ public class User {
         this.phoneNo = phoneNo;
     }
 
-    public List<Address> getAddressList() {
-        return addressList;
-    }
+//    public List<Address> getAddressList() {
+//        return addressList;
+//    }
 
-    public void setAddressList(List<Address> addressList) {
-        this.addressList = addressList;
-    }
+//    public void setAddressList(List<Address> addressList) {
+//        this.addressList = addressList;
+//    }
+//
+//    public List<Payment> getPaymentList() {
+//        return paymentList;
+//    }
+//
+//    public void setPaymentList(List<Payment> paymentList) {
+//        this.paymentList = paymentList;
+//    }
 
-    public List<Payment> getPaymentList() {
-        return paymentList;
-    }
 
-    public void setPaymentList(List<Payment> paymentList) {
-        this.paymentList = paymentList;
-    }
-
+//    public List<Address> getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(List<Address> address) {
+//        this.address = address;
+//    }
+//
     @Override
     public String toString() {
         return "User{" +
