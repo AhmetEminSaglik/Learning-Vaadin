@@ -38,7 +38,7 @@ public class FoodViewModel {
     }
     private  void updateCustomerMealGridData(){
         view.getGridCustomerMeals().setItems(
-                view.getOrderBasketView().getOrderList().stream().sorted().toList()
+                view.getOrderBasketView().getOrderConceptList().stream().sorted().toList()
         );
         view.getGridCustomerMeals().getDataProvider().refreshAll();
     }
