@@ -25,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         User user = (User) UI.getCurrent().getSession().getAttribute(EnumSessionData.USER_DATA.getName());
         if (user == null) {
-            CustomNotification.show("User is null. Fake User is created");
+            CustomNotification.showShort("User is null. Fake User is created");
             user = FakeData.getUser();
         }
 

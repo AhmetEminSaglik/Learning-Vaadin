@@ -42,7 +42,7 @@ public class PaymentBottomViewModel {
             if (isAllValid()) {
 
                 String msg = "Successfully ordered.";
-                CustomNotification.show(msg);
+                CustomNotification.showShort(msg);
 
                 Address address = createAddress();
                 Order order = createOrder(address);

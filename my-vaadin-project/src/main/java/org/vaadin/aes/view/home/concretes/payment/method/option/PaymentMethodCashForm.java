@@ -36,7 +36,7 @@ public class PaymentMethodCashForm extends Div implements OrderPurchaseValidator
 
     private void showUpSuccessfullyNotification() {
         String msg = "Order has been successfully created.";
-        CustomNotification.show(msg);
+        CustomNotification.showShort(msg);
     }
 
     @Override

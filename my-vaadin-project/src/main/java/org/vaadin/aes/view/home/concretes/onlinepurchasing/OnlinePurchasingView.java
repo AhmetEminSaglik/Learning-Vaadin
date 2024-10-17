@@ -8,9 +8,10 @@ import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.Order;
 import org.vaadin.aes.model.concrete.Payment;
+import org.vaadin.aes.service.abstracts.OrderConceptService;
 import org.vaadin.aes.service.abstracts.OrderService;
 import org.vaadin.aes.service.abstracts.address.AddressService;
-import org.vaadin.aes.service.meal.MealService;
+import org.vaadin.aes.service.abstracts.meal.MealService;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
 import viewmodel.home.onlinepurchasing.OnlinePurchasingViewModel;
 
@@ -23,6 +24,7 @@ public class OnlinePurchasingView extends AbstractLayoutView {
     private static final Logger log = Logger.getLogger(OnlinePurchasingView.class.getName());
     private final OnlinePurchasingViewModel viewModel;
 
+    private final OrderConceptService orderConceptService;
     private final OrderService orderService;
     private final AddressService addressService;
     private final MealService mealService;
@@ -30,12 +32,14 @@ public class OnlinePurchasingView extends AbstractLayoutView {
     private Payment payment;
 
     @Autowired
-    public OnlinePurchasingView(OrderService orderService, AddressService addressService, MealService mealService) {
+    public OnlinePurchasingView(OrderConceptService orderConceptService, OrderService orderService, AddressService addressService, MealService mealService) {
         super(EnumPageURL.ONLINE_PURCHASE);
         this.orderService = orderService;
         this.addressService = addressService;
+        this.orderConceptService = orderConceptService;
 
         viewModel = new OnlinePurchasingViewModel(this
+                , orderConceptService
                 , orderService
                 , addressService
                 , mealService);

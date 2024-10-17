@@ -28,15 +28,15 @@ public class CreditCardFormViewModel {
             navigateToPaymentPageWithThread();
         } else {
             String msg = "Please Fill All Data";
-            CustomNotification.show(msg);
+            CustomNotification.showShort(msg);
 
         }
     }
     private void navigateToPaymentPageWithThread() {
         String msg = "Successfully ordered.";
-        CustomNotification.show(msg);
+        CustomNotification.showShort(msg);
         msg = "Directing to Payment Page";
-        CustomNotification.show(msg);
+        CustomNotification.showShort(msg);
 
         UI.getCurrent().access(() -> {
             UI.getCurrent().navigate(EnumPageURL.PAYMENT.getUrl());
@@ -65,7 +65,7 @@ public class CreditCardFormViewModel {
         } catch (Exception e) {
             log.info("Error occured: "+e.getMessage());
         }
-        CustomNotification.show("Please fill " + field.getLabel());
+        CustomNotification.showShort("Please fill " + field.getLabel());
         return false;
 
     }
@@ -75,7 +75,7 @@ public class CreditCardFormViewModel {
                 && !field.getValue().isBlank()) {
             return true;
         }
-        CustomNotification.show("Please fill " + field.getLabel());
+        CustomNotification.showShort("Please fill " + field.getLabel());
         return false;
     }
 }

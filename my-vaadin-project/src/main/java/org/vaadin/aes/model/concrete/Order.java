@@ -2,7 +2,8 @@ package org.vaadin.aes.model.concrete;
 
 import jakarta.persistence.*;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -10,25 +11,27 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToOne
+    //    @OneToOne
+//    @JoinColumn(name = "address_id", nullable = false)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL/*, orphanRemoval = true*/)
     private List<OrderConcept> orderConcepts;
 
     @OneToOne(mappedBy = "order")
     private Payment payment;
 
     @Column(name = "createdAt")
-    private Timestamp createdAt;
+    private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
 
     public Order() {
     }

@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @Table(name = "meal_prices")
 public class MealPrice {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "meal_id", nullable = false)
     private Meal meal;
 

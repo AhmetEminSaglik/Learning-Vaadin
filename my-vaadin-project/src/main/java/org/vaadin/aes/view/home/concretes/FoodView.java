@@ -8,12 +8,14 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.concrete.OrderConcept;
-import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
+import org.vaadin.aes.service.abstracts.meal.MealService;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.CustomHtmlComponents;
+import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
 import viewmodel.home.FoodViewModel;
 
 import java.util.List;
@@ -23,14 +25,19 @@ import java.util.logging.Logger;
 @PageTitle("Food Page")
 public class FoodView extends AbstractLayoutView {
     private static final Logger log = Logger.getLogger(FoodView.class.getName());
+
     private final FoodViewModel viewModel;
     private OrderBasketView orderBasketView = new OrderBasketView();
     private final Grid<Meal> gridAllMeals = new Grid<>(Meal.class);
     private final Grid<OrderConcept> gridCustomerMeals = new Grid<>(OrderConcept.class);
 
-    public FoodView() {
+    private final MealService mealService;
+
+    @Autowired
+    public FoodView(MealService mealService) {
         super(EnumPageURL.FOOD_PAGE);
-        viewModel = new FoodViewModel(this);
+        this.mealService = mealService;
+        viewModel = new FoodViewModel(this,mealService);
         addOrderBasketToHeader();
         VerticalLayout allMealLayout = createAllMealLayout("All Foods ", viewModel.getMeals());
         VerticalLayout customerMealLayout = createCustomerMealLayout("My Orders", orderBasketView.getOrderConceptList());
@@ -151,9 +158,9 @@ public class FoodView extends AbstractLayoutView {
             viewModel.removeItemOrderBasket(meal);
             /*if (meals.contains(meal)) {
                 meals.remove(meal);
-                CustomNotification.show("Meal is removed successfully from the Cart.");
+                CustomNotification.showShort("Meal is removed successfully from the Cart.");
             } else {
-                CustomNotification.show("This meal has not been added before!");
+                CustomNotification.showShort("This meal has not been added before!");
             }*/
 
         });

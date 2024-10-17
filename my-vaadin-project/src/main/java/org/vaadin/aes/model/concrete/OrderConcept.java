@@ -15,7 +15,7 @@ public class OrderConcept implements Comparable<OrderConcept>, Serializable {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "meal_id")
     private Meal meal;
 
@@ -82,7 +82,7 @@ public class OrderConcept implements Comparable<OrderConcept>, Serializable {
     public String toString() {
         return "OrderConcept{" +
                 "id=" + id +
-                ", order=" + order +
+//                ", order=" + order.getId() +
                 ", meal=" + meal +
                 ", quantity=" + quantity +
                 '}';

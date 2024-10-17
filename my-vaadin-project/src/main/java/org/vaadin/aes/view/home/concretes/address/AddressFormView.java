@@ -48,7 +48,7 @@ public class AddressFormView extends VerticalLayout implements OrderPurchaseVali
     private boolean isTxtFieldValueValid(TextField textField) {
         String val = textField.getValue();
         if (val.isBlank()) {
-            CustomNotification.show("Please fill "+textField.getLabel()+" in Address Form");
+            CustomNotification.showShort("Please fill "+textField.getLabel()+" in Address Form");
             return false;
         }
         return true;

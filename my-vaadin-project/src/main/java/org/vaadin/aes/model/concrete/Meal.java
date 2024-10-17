@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "meals")
+@Table(name = "meals", uniqueConstraints = {@UniqueConstraint(columnNames = "name")})
 public class Meal implements Comparable<Meal> {
 
     private static final Logger log = LoggerFactory.getLogger(Meal.class);
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "meal", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "meal", cascade = {CascadeType.MERGE, CascadeType.PERSIST}/*, orphanRemoval = true*/)
     private List<OrderConcept> orderConcepts;
 
-    @OneToMany(mappedBy = "meal", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "meal", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     private List<MealPrice> priceList;
 
     @Column(name = "thumbnail")

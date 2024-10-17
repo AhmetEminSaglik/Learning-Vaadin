@@ -11,7 +11,6 @@ import org.vaadin.aes.mealdb.model.MealFromJson;
 import org.vaadin.aes.model.concrete.Meal;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -21,6 +20,7 @@ public class ApiService {
     private static final String API_URL = "https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken_breast";
     private static final Logger log = Logger.getLogger(ApiService.class.getName());
     private static List<Meal> meals;
+    private static boolean isDataSaved = false;
 
     public List<Meal> getMeals() {
 
@@ -50,4 +50,14 @@ public class ApiService {
         return mealsFromJson.stream().map(MealDTOForJson::toMeal)
                 .collect(Collectors.toList());
     }
+
+    public static boolean isDataSaved() {
+        return isDataSaved;
+    }
+
+    public static void updateDataIsSaved() {
+        isDataSaved = true;
+    }
+
+
 }

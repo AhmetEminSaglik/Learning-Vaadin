@@ -48,7 +48,7 @@ public class OrderBasketViewModel {
                 view.getOrderConceptList().remove(Order);
             }
         } else {
-            CustomNotification.show(getClass().getSimpleName() + " Meal not found : " + meal.getName() + " - " + meal.getThumbnail());
+            CustomNotification.showShort(getClass().getSimpleName() + " Meal not found : " + meal.getName() + " - " + meal.getThumbnail());
         }
         updateCartItemSize();
     }

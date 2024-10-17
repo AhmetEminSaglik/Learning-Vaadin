@@ -2,6 +2,7 @@ package org.vaadin.aes.view.auth;
 
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.HtmlContainer;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -17,6 +18,8 @@ import org.vaadin.aes.enums.EnumCssClassName;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.service.abstracts.user.AuthenticationService;
+import org.vaadin.aes.view.core.CustomSleepUtil;
+import org.vaadin.aes.view.core.notificationn.CustomNotification;
 
 import java.util.stream.Stream;
 
