@@ -20,7 +20,7 @@ import org.vaadin.aes.i18n.CustomI18NProvider;
 @SpringBootApplication
 @PWA(name = "Project Base for Vaadin with Spring", shortName = "Project Base")
 @Theme("my-theme")
-//@CssImport("./themes/my-theme")
+@CssImport("./styles/login-view-styles.css")
 public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {

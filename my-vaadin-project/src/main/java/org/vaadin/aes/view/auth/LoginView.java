@@ -4,6 +4,7 @@ import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -13,6 +14,9 @@ import com.vaadin.flow.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.aes.auth.LoginViewModel;
+import org.vaadin.aes.auth.SignupViewModel;
+import org.vaadin.aes.enums.EnumCssClassName;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
@@ -21,8 +25,6 @@ import org.vaadin.aes.model.concrete.UserCredential;
 import org.vaadin.aes.model.dto.UserDataDto;
 import org.vaadin.aes.model.mapper.UserMapper;
 import org.vaadin.aes.service.abstracts.user.AuthenticationService;
-import org.vaadin.aes.auth.LoginViewModel;
-import org.vaadin.aes.auth.SignupViewModel;
 
 import java.util.stream.Stream;
 
@@ -50,6 +52,17 @@ public class LoginView extends VerticalLayout {
             getUI().ifPresent(ui -> ui.navigate("signup"));
         });
         initPage();
+        addCss();
+    }
+
+    private void addCss() {
+        addClassName("login-form");
+        txtUsername.addClassName("login-field");
+        txtPassword.addClassName("login-field");
+        btnNavigateSignup.addClassName(EnumCssClassName.BTN.getName());
+        btnNavigateSignup.addClassName(EnumCssClassName.BTN_PRIMARY.getName());
+        btnLogin.addClassName(EnumCssClassName.BTN.getName());
+        btnLogin.addClassName(EnumCssClassName.BTN_PRIMARY.getName());
     }
 
     private void initPage() {
@@ -73,7 +86,7 @@ public class LoginView extends VerticalLayout {
                 User user = loginViewModel.login(cred);
                 if (user != null) {
                     UserDataDto userData = UserMapper.userToUserDataDto(user);
-                    UI.getCurrent().getSession().setAttribute(EnumSessionData.USER_DATA.getName(),user);
+                    UI.getCurrent().getSession().setAttribute(EnumSessionData.USER_DATA.getName(), user);
                     VaadinSession.getCurrent().setAttribute(EnumDTO.USER_DATA.getName(), userData);
                     log.info("Loggin successfully: saved user data in " + EnumDTO.USER_DATA.getName() + " as : " + userData);
                     getUI().ifPresent(ui -> ui.navigate(EnumPageURL.FOOD_PAGE.getUrl()));

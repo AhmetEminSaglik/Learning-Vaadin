@@ -32,8 +32,8 @@ public class FoodView extends AbstractLayoutView {
         super(EnumPageURL.FOOD_PAGE);
         viewModel = new FoodViewModel(this);
         addOrderBasketToHeader();
-        VerticalLayout allMealLayout = createAllMealLayout("All Meals", viewModel.getMeals());
-        VerticalLayout customerMealLayout = createCustomerMealLayout("My Meals", orderBasketView.getOrderConceptList());
+        VerticalLayout allMealLayout = createAllMealLayout("All Foods ", viewModel.getMeals());
+        VerticalLayout customerMealLayout = createCustomerMealLayout("My Orders", orderBasketView.getOrderConceptList());
 
         setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
@@ -53,6 +53,7 @@ public class FoodView extends AbstractLayoutView {
         VerticalLayout verticalLayout = createLayoutWithName(title);
         verticalLayout.setHeightFull();
         verticalLayout.setWidthFull();
+        verticalLayout.setAlignItems(Alignment.CENTER);
 
         gridAllMeals.setItems(meals);
         gridAllMeals.setSizeFull();
@@ -72,7 +73,7 @@ public class FoodView extends AbstractLayoutView {
         VerticalLayout verticalLayout = createLayoutWithName(title);
 //        verticalLayout.setHeightFull();
 //        verticalLayout.setWidth("60%");
-        verticalLayout.setAlignItems(Alignment.START);
+        verticalLayout.setAlignItems(Alignment.CENTER);
         verticalLayout.setSizeFull();
 
 

@@ -24,6 +24,10 @@ public class UserServiceImpl implements UserService {
 
     public User signUp(User user) {
         log.info("Signup user process is started");
+        if (findUserByUserName(user.getUsername()) != null) {
+            log.info("Username is already in use.");
+            return  null;
+        }
         user = userRepository.save(user);
         log.info("user is registered: " + user);
         return user;
@@ -32,6 +36,11 @@ public class UserServiceImpl implements UserService {
     public User login(UserCredential creds) {
         log.info("Login process is started");
         return userRepository.findUserByUsernameAndPassword(creds.getUsername(), creds.getPassword());
+    }
+
+    @Override
+    public User findUserByUserName(String username) {
+        return userRepository.findUserByUsername(username);
     }
 
 }

@@ -20,9 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public User signUp(User user) {
-        log.info("Signup user process is started");
         user = userService.signUp(user);
-        log.info("user registered successfully: ");
         return user;
     }
 

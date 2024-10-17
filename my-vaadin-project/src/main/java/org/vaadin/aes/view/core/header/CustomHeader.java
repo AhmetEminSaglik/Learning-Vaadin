@@ -17,12 +17,12 @@ public class CustomHeader extends HorizontalLayout {
 
     public CustomHeader(EnumPageURL enumPageURL) {
         this.enumPageURL = enumPageURL;
-        setSpacing(false);
+        setSpacing(true);
         setSizeOfItems();
 
-        rightNavBar.setSpacing(false);
+        rightNavBar.setSpacing(true);
 //        rightNavBar.setPadding(false);
-        rightNavBar.setMargin(false);
+        rightNavBar.setMargin(true);
         rightNavBar.setAlignItems(Alignment.START);
 
         Div midDiv = createDivForTitle();

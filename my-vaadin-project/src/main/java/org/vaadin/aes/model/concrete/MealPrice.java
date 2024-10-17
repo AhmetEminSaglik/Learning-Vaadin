@@ -2,7 +2,8 @@ package org.vaadin.aes.model.concrete;
 
 import jakarta.persistence.*;
 
-import java.security.Timestamp;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "meal_prices")
@@ -15,11 +16,11 @@ public class MealPrice {
     @JoinColumn(name = "meal_id", nullable = false)
     private Meal meal;
 
-    @Column(name = "price")
+    @Column(name = "price",nullable = false)
     private double price;
 
-    @Column(name = "createdAt")
-    private Timestamp createdAt;
+    @Column(name = "createdAt",nullable = false)
+    private Timestamp createdAt = Timestamp.valueOf(LocalDateTime.now());
 
     public MealPrice() {
     }

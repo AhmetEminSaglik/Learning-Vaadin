@@ -5,5 +5,8 @@ import org.vaadin.aes.model.concrete.UserCredential;
 
 public interface UserService {
     User signUp(User user);
+
     User login(UserCredential creds);
+
+    User findUserByUserName(String username);
 }

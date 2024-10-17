@@ -40,9 +40,14 @@ public class PaymentMethodView extends AbstractLayoutView {
 //        this.viewModel = new PaymentMethodViewModel();
 
         setSizeFull();
+//        setHeight("85%");
 //        setJustifyContentMode(JustifyContentMode.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
 
         myOrderView = new MyOrderView(orderConceptList);
+//        horizontalLayoutBody.setHeight("85%");
+//        horizontalLayoutBody.setWidth("100%");
         horizontalLayoutBody.setSizeFull();
         horizontalLayoutBody.setAlignItems(Alignment.CENTER);
         horizontalLayoutBody.add(paymentMethodFormView);
@@ -51,6 +56,8 @@ public class PaymentMethodView extends AbstractLayoutView {
 //        btnPay.setWidth("350px");
 
         paymentBottomView = new PaymentBottomView(this, orderConceptList);
+//        paymentBottomView.setHeight("15%");
+//        paymentBottomView.setWidth("100%");
         paymentBottomView.setSizeFull();
 
         Div bottomLayoutFrameDiv = CustomHtmlComponents.DivUtil.getDivPercent("red", 20, 30);

@@ -4,101 +4,110 @@ import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.TextFieldBase;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.aes.auth.SignupViewModel;
+import org.vaadin.aes.enums.EnumCssClassName;
+import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.service.abstracts.user.AuthenticationService;
-import org.vaadin.aes.auth.SignupViewModel;
 
 import java.util.stream.Stream;
 
-
 @Route("signup")
-@PageTitle("Sign up  | Food App")
+@PageTitle("Sign up | Food App")
 public class SignupView extends VerticalLayout {
 
     private SignupViewModel signupViewModel;
-    //    private static boolean result;
-    //    String txtDemo = UI.getCurrent().getTranslation("farewell");
-//    private TextField demoText = new TextField(txtDemo);
-//    private AuthenticationService authenticationService;
-    private Button btnNavigateLogin = new Button("Login Page");
-
-//    private Button btnSwitchToEn = new Button("English", e -> UI.getCurrent().setLocale(new Locale("en")));
-//    private Button btnSwitchToTr = new Button("Türkçe", e -> UI.getCurrent().setLocale(new Locale("tr")));
-
+    //    private Button btnSave;
+//    private Button btnNavigateLogin;
     private TextField txtFirstName = new TextField("First Name");
-    private TextField txtLastName = new TextField("Lastname");
-
+    private TextField txtLastName = new TextField("Last Name");
     private TextField txtEmail = new TextField("Email");
     private TextField txtPhone = new TextField("Phone");
-
     private TextField txtUsername = new TextField("Username");
-    private TextField txtPassword = new TextField("Password");
-    private TextField txtConfirmPassword = new TextField("Confirm Password");
-
+    private PasswordField txtPassword = new PasswordField("Password");
+    private PasswordField txtConfirmPassword = new PasswordField("Confirm Password");
     private HtmlContainer feedBackToUser = new H3();
 
     @Autowired
     public SignupView(AuthenticationService authenticationService) {
-//        txtFirstName = CurrentLanguage.setCurrentLanguageToTxtField(txtFirstName, EnumI18NLanguageSupport.USER_FIRST_NAME);
-//        this.authenticationService = authenticationService;
         this.signupViewModel = new SignupViewModel(authenticationService);
-        btnNavigateLogin.addClickListener(event -> {
-            // Diğer görünümün adı (örneğin, "anotherView" veya "viewName")
-            getUI().ifPresent(ui -> ui.navigate("login"));
-        });
+//        setJustifyContentMode(JustifyContentMode.CENTER);
+        setAlignItems(Alignment.CENTER);
+//        createBtnNavigateLogin();
+        addCss();
         initPage();
-        /*btnSwitchToTr.addClickListener((e) -> {
-            UI.getCurrent().setLocale(new Locale("tr"));
-            updateDemoText(); // Güncelleme fonksiyonunu çağır
-        });
+    }
 
-        btnSwitchToEn.addClickListener((e) -> {
-            UI.getCurrent().setLocale(new Locale("en"));
-            updateDemoText(); // Güncelleme fonksiyonunu çağır
-        });*/
+    private Button getBtnNavigateLogin() {
+        Button button = new Button("Go to Login Page");
+        button.addClickListener(event -> {
+            getUI().ifPresent(ui -> ui.navigate(EnumPageURL.LOGIN_PAGE.getUrl()));
+        });
+        button.addClassName(EnumCssClassName.BTN.getName());
+        button.addClassName(EnumCssClassName.BTN_PRIMARY.getName());
+//        button.addClassName("btn-lg");
+//        button.addClassNames("btn", "btn-primary", "btn-lg");
+        return button;
     }
 
     private void initPage() {
-//        result = true;
-        setRequiredToAllTxtFields();
-        setSizeFull();
-        Button btnSave = getBtnSaveUser();
+//        setHeightFull();
+        setHeight("auto ");
+//        setHeight("50%");
         add(
-                btnNavigateLogin,
-//                demoText,
-//                btnSwitchToEn,
-//                btnSwitchToTr,
-                txtFirstName,
-                txtLastName,
-                txtEmail,
-                txtPhone,
-                txtUsername,
-                txtPassword,
-                txtConfirmPassword,
-                btnSave,
-                feedBackToUser);
-
+                getBtnNavigateLogin(),
+                getHorizontalLayout(txtFirstName, txtLastName),
+                getHorizontalLayout(txtEmail, txtPhone),
+                getHorizontalLayout(txtUsername),
+                getHorizontalLayout(txtPassword, txtConfirmPassword),
+                getBtnSaveUser(),
+                feedBackToUser
+        );
     }
 
-    private void setRequiredToAllTxtFields() {
-        getStreamOfTxtFields().forEach(e -> e.setRequired(true));
+    private HorizontalLayout getHorizontalLayout(TextFieldBase txtField1, TextFieldBase txtField2) {
+        HorizontalLayout horizontalLayout = getDesignedHorizontalLayout();
+        horizontalLayout.add(txtField1);
+        horizontalLayout.add(txtField2);
+        return horizontalLayout;
     }
+
+    private HorizontalLayout getHorizontalLayout(TextFieldBase txtField) {
+        HorizontalLayout horizontalLayout = getDesignedHorizontalLayout();
+        horizontalLayout.add(txtField);
+        return horizontalLayout;
+    }
+
+    private HorizontalLayout getDesignedHorizontalLayout() {
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.setHeight("auto");
+        horizontalLayout.setWidth("50%");
+
+        return horizontalLayout;
+    }
+
 
     private Button getBtnSaveUser() {
         Button button = new Button("Save");
+
+        button.addClassName(EnumCssClassName.BTN.getName());
+        button.addClassName(EnumCssClassName.BTN_PRIMARY.getName());
+//        button.addClassName("large-button");
+        button.addClassName(EnumCssClassName.BTN.getName());
+        button.addClassName(EnumCssClassName.BTN_PRIMARY.getName());
         button.addClickListener(e -> {
             boolean result = true;
             if (!isAllFieldsFilled()) {
                 feedBackToUser.setText("Please fill all fields");
             } else {
-//                if (feedBackToUser != null) {
-//                    remove(feedBackToUser);
-//                }
                 if (!isPasswordMatches()) {
                     feedBackToUser.setText("Passwords do not match");
                     return;
@@ -106,10 +115,10 @@ public class SignupView extends VerticalLayout {
                 User user = convertTypedDataToUserModel();
                 result = signupViewModel.signUp(user);
                 if (result) {
-                    feedBackToUser.setText("User Saved successfully. You can login now.");
-
+                    feedBackToUser.setText("User saved successfully. You can log in now.");
                 } else {
-                    feedBackToUser.setText("Error occurred. User is not saved.");
+                    //todo here must be return DataResult not only user or null. So this is temporary solution
+                    feedBackToUser.setText("User is not saved. Please pick up another username");
                 }
                 resetAllTextFields();
             }
@@ -119,17 +128,9 @@ public class SignupView extends VerticalLayout {
     }
 
     private boolean isAllFieldsFilled() {
-        /*getStreamOfTxtFields().forEach(e -> {
-            if (e.getValue().isBlank()) {
-//                e.setErrorMessage("Please fill the required fields :" + e.getTitle());
-                result = false;
-            }
-        });*/
-
         boolean anyBlankField = getStreamOfTxtFields()
                 .map(e -> e.getValue().isBlank())
                 .anyMatch(isBlank -> isBlank);
-
         return !anyBlankField;
     }
 
@@ -153,17 +154,26 @@ public class SignupView extends VerticalLayout {
     }
 
     private void resetAllTextFields() {
-//        if (result) {
-        getStreamOfTxtFields()
-                .forEach(HasValue::clear);
-//        }
+        getStreamOfTxtFields().forEach(HasValue::clear);
     }
 
-    private Stream<TextField> getStreamOfTxtFields() {
+    private Stream<TextFieldBase<? extends TextFieldBase<?, ?>, String>> getStreamOfTxtFields() {
         return Stream.of(txtFirstName, txtLastName, txtEmail, txtPhone, txtUsername, txtPassword, txtConfirmPassword);
     }
-//    private void updateDemoText() {
-//        txtDemo = UI.getCurrent().getTranslation("farewell");
-//        demoText.setLabel(txtDemo); // Label'ı güncelle
-//    }
+
+    private void addCss() {
+        getStreamOfTxtFields().forEach(field -> {
+//            field.setSizeFull();
+            field.setSizeFull();
+            field.addClassName("input-lg");
+            field.addClassName("forrm-group-lg");
+//            field.addClassNames("form-control input-lg"); // Bootstrap sınıflarını ekle
+        });
+//        txtPassword.addClassNames(/*"form-control",*/ "mb-3");
+//        txtConfirmPassword.addClassNames("form-control", "mb-3");
+    }
+
+    /*private void setRequiredToAllTxtFields() {
+        getStreamOfTxtFields().forEach(e -> e.setRequired(true));
+    }*/
 }
