@@ -12,7 +12,7 @@ public class MealPrice {
     @GeneratedValue(strategy = GenerationType.SEQUENCE )
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne/*(cascade = CascadeType.MERGE)*/
     @JoinColumn(name = "meal_id", nullable = false)
     private Meal meal;
 

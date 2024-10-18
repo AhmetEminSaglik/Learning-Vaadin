@@ -22,6 +22,7 @@ public class PaymentBottomView extends HorizontalLayout implements OrderPurchase
     private final PaymentBottomViewModel viewModel;
     //    private List<OrderConcept> orderConceptList;
     private PaymentMethodView paymentMethodView;
+    private boolean isPageCreatedBefore = false;
 
     @Autowired
     public PaymentBottomView(PaymentBottomViewModel viewModel) {
@@ -60,11 +61,18 @@ public class PaymentBottomView extends HorizontalLayout implements OrderPurchase
         return paymentMethodView;
     }
 
-    public void  setPaymentMethodView(PaymentMethodView paymentMethodView) {
-        this.paymentMethodView = paymentMethodView;
-        viewModel.setPaymentMethodView(paymentMethodView);
-        viewModel.calculateTotalPrice(this);
-        viewModel.addClickListenerBtnPay(this, btnPay);
+    public void setPaymentMethodView(PaymentMethodView paymentMethodView) {
+            log.info("setPaymentMethodView'e geldi: isPageCreatedBefore="+isPageCreatedBefore);
+        if (!isPageCreatedBefore) {
+            isPageCreatedBefore = true;
+            this.paymentMethodView = paymentMethodView;
+            viewModel.setPaymentMethodView(paymentMethodView);
+            viewModel.addClickListenerBtnPay(this, btnPay);
+            viewModel.calculateTotalPrice(this);
+            log.info("setPaymentMethodView'e geldi this: " + this);
+            log.info("setPaymentMethodView'e geldi viewModel: " + viewModel);
+            log.info("setPaymentMethodView'e geldi btnPay: " + btnPay);
+        }
     }
 
     @Override

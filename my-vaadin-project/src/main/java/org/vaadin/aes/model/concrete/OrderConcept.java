@@ -11,12 +11,12 @@ public class OrderConcept implements Comparable<OrderConcept>, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "order_id")
     private Order order;
 
     //    @ManyToOne(cascade ={ CascadeType.MERGE, CascadeType.PERSIST})
-    @ManyToOne(cascade =  {CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "meal_id")
     private Meal meal;
 

@@ -19,10 +19,11 @@ public class Meal implements Comparable<Meal> {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "meal", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    private List<OrderConcept> orderConcepts;
+//    @OneToMany(mappedBy = "meal", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+//    private List<OrderConcept> orderConcepts;
 
-    @OneToMany(mappedBy = "meal", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+//    @OneToMany(mappedBy = "meal", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToMany(mappedBy = "meal", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<MealPrice> priceList;
 
     @Column(name = "thumbnail")
