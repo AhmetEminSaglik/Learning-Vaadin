@@ -20,11 +20,11 @@ public class Order {
 
     //    @OneToOne
 //    @JoinColumn(name = "address_id", nullable = false)
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL/*, orphanRemoval = true*/)
+    @OneToMany(mappedBy = "order", cascade =  {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     private List<OrderConcept> orderConcepts;
 
     @OneToOne(mappedBy = "order")

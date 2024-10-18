@@ -1,15 +1,19 @@
-package org.vaadin.aes.auth;
+package org.vaadin.aes.viewmodel.auth;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.vaadin.aes.model.concrete.User;
 import org.vaadin.aes.service.abstracts.user.AuthenticationService;
 
 import java.util.logging.Logger;
 
+@Component
 public class SignupViewModel {
     private static final Logger log = Logger.getLogger(SignupViewModel.class.getName());
-    private AuthenticationService authService;
+    private final AuthenticationService authService;
     private User user;
 
+    @Autowired
     public SignupViewModel(AuthenticationService authService) {
         this.authService = authService;
         this.user = new User();

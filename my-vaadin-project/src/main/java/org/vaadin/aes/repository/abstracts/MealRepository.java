@@ -5,4 +5,5 @@ import org.vaadin.aes.model.concrete.Meal;
 
 public interface MealRepository extends JpaRepository<Meal,Long> {
     Meal findByName(String name);
+
 }

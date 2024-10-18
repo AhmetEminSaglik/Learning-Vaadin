@@ -1,52 +1,54 @@
-package viewmodel.home.payment.form;
+package org.vaadin.aes.viewmodel.home.payment.form;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.*;
-import org.vaadin.aes.service.abstracts.OrderService;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 import org.vaadin.aes.view.home.concretes.PaymentMethodView;
 import org.vaadin.aes.view.home.concretes.payment.PaymentBottomView;
+import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 
 import java.util.logging.Logger;
 
-public class PaymentBottomViewModel {
-    private final PaymentBottomView view;
+@Component
+public class PaymentBottomViewModel implements OrderPurchaseValidator {
+    //    private final PaymentBottomView view;
     private static final Logger log = Logger.getLogger(PaymentBottomViewModel.class.getName());
-    private final PaymentMethodView paymentMethodView;
 
-    public PaymentBottomViewModel(PaymentBottomView view, PaymentMethodView paymentMethodView) {
-        this.view = view;
+    private PaymentMethodView paymentMethodView;
+
+    public PaymentMethodView getPaymentMethodView() {
+        return paymentMethodView;
+    }
+
+    public void setPaymentMethodView(PaymentMethodView paymentMethodView) {
         this.paymentMethodView = paymentMethodView;
     }
 
-    public void calculateTotalPrice() {
-        double total = view.getOrderConceptList()
+    public void calculateTotalPrice(PaymentBottomView view) {
+        double total = paymentMethodView.getOrderConceptList()
                 .stream()
                 .mapToDouble(e -> e.getMeal().getPrice() * e.getQuantity())
                 .sum();
 //        view.getTotalPrice().setTitle(CashFormatUtil.convertTL(total));
-        view.setTotalPrice(new H3(CashFormatUtil.convertTL(total)));
+        view.setTotalPrice(CashFormatUtil.convertTL(total));
     }
 
-    public void addClickListenerBtnPay(Button btnPay) {
+    public void addClickListenerBtnPay(PaymentBottomView view, Button btnPay) {
         btnPay.addClickListener(e -> {
-            if (isAllValid()) {
+            if (isValid()) {
 
                 String msg = "Successfully ordered.";
                 CustomNotification.showShort(msg);
 
-                Address address = createAddress();
-                Order order = createOrder(address);
-                Payment payment = createPayment(order);
+                Address address = createAddress(paymentMethodView);
+                Order order = createOrder( address);
+                Payment payment = createPayment(view, order);
 
                 UI.getCurrent().getSession().setAttribute(EnumSessionData.ORDER.getName(), order);
                 UI.getCurrent().getSession().setAttribute(EnumSessionData.PAYMENT.getName(), payment);
@@ -55,7 +57,7 @@ public class PaymentBottomViewModel {
         });
     }
 
-    private Payment createPayment(Order order) {
+    private Payment createPayment(PaymentBottomView view, Order order) {
         Payment payment = new Payment();
         PaymentMethod paymentMethod = new PaymentMethod();
         paymentMethod.setName(view.getPaymentMethodView().getPaymentMethodFormView().getSelectedMethod().getName());
@@ -65,29 +67,23 @@ public class PaymentBottomViewModel {
     }
 
 
-    private Address createAddress() {
+    private Address createAddress(PaymentMethodView view) {
         Address address = new Address();
-        address.setStreet(view.getPaymentMethodView().getAddressFormView().getStreet());
-        address.setCity(view.getPaymentMethodView().getAddressFormView().getCity());
+        address.setStreet(view.getAddressFormView().getStreet());
+        address.setCity(view.getAddressFormView().getCity());
         return address;
     }
 
     private Order createOrder(Address address) {
         Order order = new Order();
-        order.setOrderConcepts(view.getOrderConceptList());
+        order.setOrderConcepts(paymentMethodView.getOrderConceptList());
         order.setUser((User) UI.getCurrent().getSession().getAttribute(EnumSessionData.USER_DATA.getName()));
         order.setAddress(address);
         return order;
     }
 
-    private boolean isAllValid() {
-        if (paymentMethodView.getPaymentMethodFormView().isValid()
-                && paymentMethodView.getAddressFormView().isValid()
-        ) {
-            return true;
-        }
-        return false;
-
+    @Override
+    public boolean isValid() {
+        return paymentMethodView.isValid();
     }
-
 }

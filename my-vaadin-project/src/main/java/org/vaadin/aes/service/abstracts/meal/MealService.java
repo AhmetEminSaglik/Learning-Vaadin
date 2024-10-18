@@ -8,4 +8,5 @@ public interface MealService {
     Meal save(Meal meal);
     List<Meal> saveList(List<Meal> list);
     Meal findById(Long id);
+    List<Meal> findAll();
 }

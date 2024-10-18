@@ -12,11 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.concrete.OrderConcept;
-import org.vaadin.aes.service.abstracts.meal.MealService;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.CustomHtmlComponents;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
-import viewmodel.home.FoodViewModel;
+import org.vaadin.aes.viewmodel.home.FoodViewModel;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,13 +30,11 @@ public class FoodView extends AbstractLayoutView {
     private final Grid<Meal> gridAllMeals = new Grid<>(Meal.class);
     private final Grid<OrderConcept> gridCustomerMeals = new Grid<>(OrderConcept.class);
 
-    private final MealService mealService;
-
     @Autowired
-    public FoodView(MealService mealService) {
+    public FoodView(FoodViewModel viewModel) {
         super(EnumPageURL.FOOD_PAGE);
-        this.mealService = mealService;
-        viewModel = new FoodViewModel(this,mealService);
+        this.viewModel = viewModel;
+
         addOrderBasketToHeader();
         VerticalLayout allMealLayout = createAllMealLayout("All Foods ", viewModel.getMeals());
         VerticalLayout customerMealLayout = createCustomerMealLayout("My Orders", orderBasketView.getOrderConceptList());
@@ -126,7 +123,7 @@ public class FoodView extends AbstractLayoutView {
     private Button createAddButtonForGridComponent(Meal meal) {
         Button button = new Button("Add");
         button.addClickListener(e -> {
-            viewModel.addItemToOrderBasket(meal);
+            viewModel.addItemToOrderBasket(this, meal);
         });
         return button;
     }
@@ -155,7 +152,7 @@ public class FoodView extends AbstractLayoutView {
     private Button createRemoveButtonForGridComponent(Meal meal) {
         Button button = new Button("Remove");
         button.addClickListener(e -> {
-            viewModel.removeItemOrderBasket(meal);
+            viewModel.removeItemOrderBasket(this, meal);
             /*if (meals.contains(meal)) {
                 meals.remove(meal);
                 CustomNotification.showShort("Meal is removed successfully from the Cart.");

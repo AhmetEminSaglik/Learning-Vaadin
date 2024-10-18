@@ -1,13 +1,10 @@
 package org.vaadin.aes.view.home.concretes.payment.method.option;
 
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Hr;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
-import org.vaadin.aes.view.home.concretes.PaymentView;
-import viewmodel.home.service.OrderPurchaseValidator;
+import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 
 
 public class PaymentMethodCashForm extends Div implements OrderPurchaseValidator {

@@ -5,17 +5,18 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "order_concept")
+@Table(name = "order_concepts")
 public class OrderConcept implements Comparable<OrderConcept>, Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name = "order_id")
     private Order order;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    //    @ManyToOne(cascade ={ CascadeType.MERGE, CascadeType.PERSIST})
+    @ManyToOne(cascade =  {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "meal_id")
     private Meal meal;
 

@@ -1,4 +1,4 @@
-package viewmodel.home;
+package org.vaadin.aes.viewmodel.home;
 
 import com.nimbusds.jose.shaded.gson.Gson;
 import com.vaadin.flow.component.UI;

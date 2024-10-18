@@ -1,21 +1,24 @@
 package org.vaadin.aes.view.home.concretes.payment.form;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import viewmodel.home.payment.form.CreditCardFormViewModel;
-import viewmodel.home.service.OrderPurchaseValidator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.vaadin.aes.viewmodel.home.payment.form.CreditCardFormViewModel;
+import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 
-
+@Component
 public class CreditCardFormView extends VerticalLayout implements OrderPurchaseValidator {
 
-    private final CreditCardFormViewModel viewModel = new CreditCardFormViewModel(this);
+    private final CreditCardFormViewModel viewModel;
     private final TextField txtFieldCreditCardOwnerName = new TextField();
     private final TextField txtFieldCreditCardNo = new TextField();
     private final TextField txtFieldPhoneNo = new TextField();
 //    private final Button btnPay = new Button("Give Order");
 
-    public CreditCardFormView() {
+    @Autowired
+    public CreditCardFormView(CreditCardFormViewModel viewModel) {
+        this.viewModel = viewModel;
 
         txtFieldCreditCardOwnerName.setLabel("Credit Card Owner Name");
         txtFieldCreditCardOwnerName.setRequiredIndicatorVisible(true);
@@ -53,6 +56,6 @@ public class CreditCardFormView extends VerticalLayout implements OrderPurchaseV
 
     @Override
     public boolean isValid() {
-        return viewModel.isFilledAllData();
+        return viewModel.isFilledAllData(this);
     }
 }

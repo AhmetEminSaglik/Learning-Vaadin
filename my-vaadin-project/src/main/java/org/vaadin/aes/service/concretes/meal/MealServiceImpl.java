@@ -34,15 +34,18 @@ public class MealServiceImpl implements MealService {
             log.info("savedMeal null oldugu icin savlendi: " + savedMeal);
             savedMeal = mealRepository.save(meal);
             log.info("savedMeal son durum: " + savedMeal);
-            return savedMeal;
         } else {
-            log.info("Meal is registered already. Meal Price will be added as a new price");
-            MealPrice mealPrice = new MealPrice();
-            mealPrice.setMeal(savedMeal);
-            mealPrice.setPrice(meal.getPrice());
-            mealPriceService.save(mealPrice);
-            return meal;
+            log.info("Meal is registered already: " + savedMeal);
+            if (savedMeal.getPrice() != meal.getPrice()) {
+                log.info("Meal Price will be added as a new price");
+                MealPrice mealPrice = new MealPrice();
+                mealPrice.setMeal(savedMeal);
+                mealPrice.setPrice(meal.getPrice());
+                mealPriceService.save(mealPrice);
+            }
         }
+        return savedMeal;
+
     }
 
     @Override
@@ -58,5 +61,10 @@ public class MealServiceImpl implements MealService {
     @Override
     public Meal findById(Long id) {
         return mealRepository.findById(id).get();
+    }
+
+    @Override
+    public List<Meal> findAll() {
+        return mealRepository.findAll();
     }
 }

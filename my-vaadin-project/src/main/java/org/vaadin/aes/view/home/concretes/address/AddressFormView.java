@@ -7,11 +7,12 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
-import viewmodel.home.service.OrderPurchaseValidator;
+import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 //import viewmodel.home.address.AddressFromViewModel;
 
 import java.util.logging.Logger;
 
+@Component
 public class AddressFormView extends VerticalLayout implements OrderPurchaseValidator {
 
     private static final Logger log = Logger.getLogger(AddressFormView.class.getName());

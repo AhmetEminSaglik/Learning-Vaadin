@@ -1,4 +1,4 @@
-package org.vaadin.aes.auth;
+package org.vaadin.aes.viewmodel.auth;
 
 import com.vaadin.flow.component.HtmlContainer;
 import org.vaadin.aes.model.concrete.User;

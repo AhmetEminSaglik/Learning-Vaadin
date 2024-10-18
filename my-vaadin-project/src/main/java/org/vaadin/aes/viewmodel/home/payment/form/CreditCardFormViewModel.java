@@ -1,4 +1,4 @@
-package viewmodel.home.payment.form;
+package org.vaadin.aes.viewmodel.home.payment.form;
 
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -14,13 +14,11 @@ import org.vaadin.aes.view.home.concretes.payment.form.CreditCardFormView;
 @Component
 public class CreditCardFormViewModel {
     private static final Logger log = LoggerFactory.getLogger(CreditCardFormViewModel.class);
-    private CreditCardFormView view;
 
     @Autowired
     private PaymentService paymentService;
 
-    public CreditCardFormViewModel(CreditCardFormView view) {
-        this.view = view;
+    public CreditCardFormViewModel() {
     }
 
     /*public void processBtnGiveOrder() {
@@ -45,7 +43,7 @@ public class CreditCardFormViewModel {
 
     }*/
 
-    public boolean isFilledAllData() {
+    public boolean isFilledAllData(CreditCardFormView view) {
         if (isDataValid(view.getTxtFieldCreditCardOwnerName())
                 && isDataValid(view.getTxtFieldCreditCardNo())
                 && isDataValid(view.getTxtFieldPhoneNo())
@@ -63,7 +61,7 @@ public class CreditCardFormViewModel {
                 return true;
             }
         } catch (Exception e) {
-            log.info("Error occured: "+e.getMessage());
+            log.info("Error occured: " + e.getMessage());
         }
         CustomNotification.showShort("Please fill " + field.getLabel());
         return false;

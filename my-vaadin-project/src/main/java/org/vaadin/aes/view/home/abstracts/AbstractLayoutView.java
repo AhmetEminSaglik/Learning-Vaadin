@@ -1,5 +1,6 @@
 package org.vaadin.aes.view.home.abstracts;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.BeforeEnterEvent;
@@ -13,7 +14,7 @@ import org.vaadin.aes.view.core.header.CustomHeader;
 
 import java.util.logging.Logger;
 
-public abstract class AbstractLayoutView extends VerticalLayout implements BeforeEnterObserver {
+public abstract class AbstractLayoutView extends VerticalLayout /*implements BeforeEnterObserver */{
     private static final Logger log = Logger.getLogger(AbstractLayoutView.class.getName());
     //    private EnumPageURL enumPageURL;
     protected LeftDrawer leftDrawer = new LeftDrawer();
@@ -21,6 +22,12 @@ public abstract class AbstractLayoutView extends VerticalLayout implements Befor
     private final VerticalLayout body = new VerticalLayout();
 
     public AbstractLayoutView(EnumPageURL enumPageURL) {
+        if (!isUserLoggedIn()) {
+            navigateToLogin();
+            return;
+        }
+
+
         log.info(getClassName() + " userData should be found. Go on " + getClass().getSimpleName() + " page");
 //        this.enumPageURL = enumPageURL;
         this.customHeader = new CustomHeader(enumPageURL);
@@ -47,14 +54,14 @@ public abstract class AbstractLayoutView extends VerticalLayout implements Befor
     }
 
     // 14.10.2024 toplantida konusuldu
-    @Override
+/*    @Override
     public void beforeEnter(BeforeEnterEvent event) {
-//        if(!isUserLoggedIn()){
+        if (!isUserLoggedIn()) {
 //            event.forwardTo(LoginView.class);
-//            event.forwardTo(EnumPageURL.LOGIN_PAGE.getUrl());
-//        }
+            event.forwardTo(EnumPageURL.LOGIN_PAGE.getUrl());
+        }
 
-    }
+    }*/
 
     private boolean isUserLoggedIn() {
         UserDataDto userData = (UserDataDto) VaadinSession.getCurrent().getAttribute(EnumDTO.USER_DATA.getName());
@@ -63,5 +70,9 @@ public abstract class AbstractLayoutView extends VerticalLayout implements Befor
             return false;
         }
         return true;
+    }
+
+    private void navigateToLogin() {
+        UI.getCurrent().navigate(EnumPageURL.LOGIN_PAGE.getUrl());
     }
 }

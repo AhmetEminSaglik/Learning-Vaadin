@@ -2,7 +2,6 @@ package org.vaadin.aes.view.auth;
 
 import com.vaadin.flow.component.HasValue;
 import com.vaadin.flow.component.HtmlContainer;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -13,13 +12,10 @@ import com.vaadin.flow.component.textfield.TextFieldBase;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.vaadin.aes.auth.SignupViewModel;
 import org.vaadin.aes.enums.EnumCssClassName;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.User;
-import org.vaadin.aes.service.abstracts.user.AuthenticationService;
-import org.vaadin.aes.view.core.CustomSleepUtil;
-import org.vaadin.aes.view.core.notificationn.CustomNotification;
+import org.vaadin.aes.viewmodel.auth.SignupViewModel;
 
 import java.util.stream.Stream;
 
@@ -27,7 +23,7 @@ import java.util.stream.Stream;
 @PageTitle("Sign up | Food App")
 public class SignupView extends VerticalLayout {
 
-    private SignupViewModel signupViewModel;
+    private final SignupViewModel viewModel;
     //    private Button btnSave;
 //    private Button btnNavigateLogin;
     private TextField txtFirstName = new TextField("First Name");
@@ -40,8 +36,8 @@ public class SignupView extends VerticalLayout {
     private HtmlContainer feedBackToUser = new H3();
 
     @Autowired
-    public SignupView(AuthenticationService authenticationService) {
-        this.signupViewModel = new SignupViewModel(authenticationService);
+    public SignupView(SignupViewModel viewModel) {
+        this.viewModel = viewModel;
 //        setJustifyContentMode(JustifyContentMode.CENTER);
         setAlignItems(Alignment.CENTER);
 //        createBtnNavigateLogin();
@@ -116,7 +112,7 @@ public class SignupView extends VerticalLayout {
                     return;
                 }
                 User user = convertTypedDataToUserModel();
-                result = signupViewModel.signUp(user);
+                result = viewModel.signUp(user);
                 if (result) {
                     feedBackToUser.setText("User saved successfully. You can log in now.");
                 } else {

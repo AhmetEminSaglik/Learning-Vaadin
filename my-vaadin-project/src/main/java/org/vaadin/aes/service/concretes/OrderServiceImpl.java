@@ -19,23 +19,6 @@ public class OrderServiceImpl implements OrderService {
         this.orderRepository = orderRepository;
         this.orderConceptRepository = orderConceptRepository;
     }
-
-    /*@Override
-    public Order createOrder(List<OrderConcept> orderConceptList, Address address) {
-        Order order = new Order();
-        User user = (User) UI.getCurrent().getSession().getAttribute(EnumSessionData.USER_DATA.getName());
-        if (user == null) {
-            CustomNotification.showShort("User is null. Fake User is created");
-            user = FakeData.getUser();
-        }
-
-        order.setUser(user);
-        order.setAddress(address);
-        order.setAddress(address);
-        log.info("Order created : " + order);
-        return order;
-    }
-*/
     @Override
     public Order save(Order order) {
         order = orderRepository.save(order);

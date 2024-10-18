@@ -15,7 +15,7 @@ import org.vaadin.aes.model.concrete.OrderConcept;
 import org.vaadin.aes.model.dto.UserDataDto;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.cssdesign.CssDesign;
-import viewmodel.home.OrderBasketViewModel;
+import org.vaadin.aes.viewmodel.home.OrderBasketViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

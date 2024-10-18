@@ -1,5 +1,7 @@
-package viewmodel.home.onlinepurchasing;
+package org.vaadin.aes.viewmodel.home.onlinepurchasing;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.vaadin.aes.model.concrete.Address;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.concrete.Order;
@@ -14,36 +16,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Component
 public class OnlinePurchasingViewModel {
     private static final Logger log = Logger.getLogger(OnlinePurchasingViewModel.class.getName());
 
-    private final OnlinePurchasingView view;
     private final OrderService orderService;
     private final OrderConceptService orderConceptService;
     private final AddressService addressService;
     private final MealService mealService;
 
-    private Order order;
+    private Order order = new Order();
 
-    public OnlinePurchasingViewModel(OnlinePurchasingView view
-            , OrderConceptService orderConceptService
+    @Autowired
+    public OnlinePurchasingViewModel(
+            OrderConceptService orderConceptService
             , OrderService orderService
             , AddressService addressService
             , MealService mealService) {
-        this.view = view;
         this.orderConceptService = orderConceptService;
         this.orderService = orderService;
         this.addressService = addressService;
         this.mealService = mealService;
     }
 
-    public void saveData() {
+    public void saveData(OnlinePurchasingView view) {
         order = view.getOrder();
 //        saveAddress();
 //        saveOrderConcept();
         log.info("Order to save: " + order);
-        order = saveOrder();
         saveOrderConcept();
+        order = saveOrder();
         clearOrderData();
     }
 
@@ -75,14 +77,16 @@ public class OnlinePurchasingViewModel {
     private void saveOrderConcept() {
         List<OrderConcept> savedOrderConceptList = new ArrayList<>();
         order.getOrderConcepts().forEach(e -> {
-            Meal tmpMeal = mealService.save(e.getMeal());
-            e.setMeal(tmpMeal);
+//            Meal tmpMeal = mealService.save(e.getMeal());
+//            e.setMeal(tmpMeal);
             e.setOrder(order);
-            savedOrderConceptList.add(orderConceptService.save(e));
+            log.info("OrderConcept data: "+e);
+            OrderConcept orderConcept=orderConceptService.save(e);
+            savedOrderConceptList.add(orderConcept);
         });
         order.setOrderConcepts(savedOrderConceptList);
         List<OrderConcept> orderConceptList = orderConceptService.save(order.getOrderConcepts());
-        orderConceptList.stream().forEach(e -> log.info("Data is saved: " + orderConceptList));
+        orderConceptList.stream().forEach(e -> log.info("Data is saved: " + e));
         /*List<Meal> existindMealList = saveMealList();
         List<OrderConcept> orderConceptList = new ArrayList<>();
 

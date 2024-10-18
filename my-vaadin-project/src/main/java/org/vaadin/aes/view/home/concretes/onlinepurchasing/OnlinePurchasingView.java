@@ -8,12 +8,8 @@ import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.Order;
 import org.vaadin.aes.model.concrete.Payment;
-import org.vaadin.aes.service.abstracts.OrderConceptService;
-import org.vaadin.aes.service.abstracts.OrderService;
-import org.vaadin.aes.service.abstracts.address.AddressService;
-import org.vaadin.aes.service.abstracts.meal.MealService;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
-import viewmodel.home.onlinepurchasing.OnlinePurchasingViewModel;
+import org.vaadin.aes.viewmodel.home.onlinepurchasing.OnlinePurchasingViewModel;
 
 import java.util.logging.Logger;
 
@@ -23,35 +19,17 @@ public class OnlinePurchasingView extends AbstractLayoutView {
 
     private static final Logger log = Logger.getLogger(OnlinePurchasingView.class.getName());
     private final OnlinePurchasingViewModel viewModel;
-
-    private final OrderConceptService orderConceptService;
-    private final OrderService orderService;
-    private final AddressService addressService;
-    private final MealService mealService;
     private Order order;
     private Payment payment;
 
     @Autowired
-    public OnlinePurchasingView(OrderConceptService orderConceptService, OrderService orderService, AddressService addressService, MealService mealService) {
+    public OnlinePurchasingView(OnlinePurchasingViewModel viewModel) {
         super(EnumPageURL.ONLINE_PURCHASE);
-        this.orderService = orderService;
-        this.addressService = addressService;
-        this.orderConceptService = orderConceptService;
 
-        viewModel = new OnlinePurchasingViewModel(this
-                , orderConceptService
-                , orderService
-                , addressService
-                , mealService);
+        this.viewModel = viewModel;
         order = (Order) UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER.getName());
         payment = (Payment) UI.getCurrent().getSession().getAttribute(EnumSessionData.PAYMENT.getName());
-
-        log.info("Retrieved Order:  " + order);
-        log.info("Retrieved Payment:  " + payment);
-        log.info("orderService orderService:  " + orderService);
-
-        viewModel.saveData();
-        this.mealService = mealService;
+        viewModel.saveData(this);
     }
 
     public Order getOrder() {
