@@ -3,6 +3,7 @@ package org.vaadin.aes.view.home.concretes.onlinepurchasing;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
@@ -15,6 +16,7 @@ import java.util.logging.Logger;
 
 @Route("online-purchasing")
 @PageTitle("Online Purchasing page")
+@UIScope
 public class OnlinePurchasingView extends AbstractLayoutView {
 
     private static final Logger log = Logger.getLogger(OnlinePurchasingView.class.getName());
@@ -27,10 +29,7 @@ public class OnlinePurchasingView extends AbstractLayoutView {
         super(EnumPageURL.ONLINE_PURCHASE);
         log.info("Initialize edilen OnlinePurchasingView: " + this);
         this.viewModel = viewModel;
-        order = (Order) UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER.getName());
 
-        log.info("Her seferinde yeni order gelmeli:  " + order);
-        payment = (Payment) UI.getCurrent().getSession().getAttribute(EnumSessionData.PAYMENT.getName());
         viewModel.saveData(this);
     }
 

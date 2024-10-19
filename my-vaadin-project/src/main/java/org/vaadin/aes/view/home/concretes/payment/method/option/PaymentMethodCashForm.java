@@ -3,10 +3,14 @@ package org.vaadin.aes.view.home.concretes.payment.method.option;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Hr;
+import com.vaadin.flow.spring.annotation.UIScope;
+import org.springframework.stereotype.Component;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 
 
+@Component
+@UIScope
 public class PaymentMethodCashForm extends Div implements OrderPurchaseValidator {
 
 //    private Button btnPay = new Button("Give Order");

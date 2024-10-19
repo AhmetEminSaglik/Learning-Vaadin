@@ -2,12 +2,14 @@ package org.vaadin.aes.view.home.concretes.payment.form;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.viewmodel.home.payment.form.CreditCardFormViewModel;
 import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 
 @Component
+@UIScope
 public class CreditCardFormView extends VerticalLayout implements OrderPurchaseValidator {
 
     private final CreditCardFormViewModel viewModel;

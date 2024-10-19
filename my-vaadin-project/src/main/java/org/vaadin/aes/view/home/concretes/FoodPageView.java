@@ -8,6 +8,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.Meal;
@@ -22,6 +23,7 @@ import java.util.logging.Logger;
 
 @Route("food-page")
 @PageTitle("Food Page")
+@UIScope
 public class FoodPageView extends AbstractLayoutView {
     private static final Logger log = Logger.getLogger(FoodPageView.class.getName());
 
@@ -34,7 +36,6 @@ public class FoodPageView extends AbstractLayoutView {
     public FoodPageView(FoodPageViewModel viewModel) {
         super(EnumPageURL.FOOD_PAGE);
         this.viewModel = viewModel;
-
         addOrderBasketToHeader();
         VerticalLayout allMealLayout = createAllMealLayout("All Foods ", viewModel.getMeals());
         VerticalLayout customerMealLayout = createCustomerMealLayout("My Orders", orderBasketView.getOrderConceptList());

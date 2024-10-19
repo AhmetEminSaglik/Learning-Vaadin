@@ -4,6 +4,7 @@ import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.view.home.concretes.PaymentMethodView;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 
 
 @Component
+@UIScope
 public class PaymentBottomView extends HorizontalLayout implements OrderPurchaseValidator {
     private static final Logger log = Logger.getLogger(PaymentBottomView.class.getName());
 

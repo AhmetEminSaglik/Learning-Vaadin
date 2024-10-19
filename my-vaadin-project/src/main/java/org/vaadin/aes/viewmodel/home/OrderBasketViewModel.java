@@ -6,8 +6,9 @@ import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.concrete.OrderConcept;
-import org.vaadin.aes.view.home.concretes.OrderBasketView;
+import org.vaadin.aes.view.core.OrderConceptPriceUtility;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
+import org.vaadin.aes.view.home.concretes.OrderBasketView;
 
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -66,10 +67,7 @@ public class OrderBasketViewModel {
     }
 
     private double calculateTotalPriceInOrderBasket() {
-        double total = view.getOrderConceptList()
-                .stream()
-                .mapToDouble(tmp -> tmp.getMeal().getPrice() * tmp.getQuantity())
-                .sum();
+        double total = OrderConceptPriceUtility.calculate(view.getOrderConceptList());
 //        log.info("Calculated total price in order basket is : " + total);
         return total;
 
@@ -77,9 +75,10 @@ public class OrderBasketViewModel {
 
     public void buyItems() {
 //        String orderJson = serializeOrderToJson(view.getOrderList());
-        UI.getCurrent().getSession().setAttribute(EnumSessionData.ORDER_CONCEPT_LIST.getName(),view.getOrderConceptList());
+        UI.getCurrent().getSession().setAttribute(EnumSessionData.ORDER_CONCEPT_LIST.getName(), view.getOrderConceptList());
         UI.getCurrent().navigate(EnumPageURL.PAYMENT_METHOD.getUrl());
     }
+
     private String serializeOrderToJson(OrderConcept order) {
         // Order nesnesini JSON formatına çevirme işlemini gerçekleştirin
         // (Bu işlem için bir JSON kütüphanesi kullanabilirsiniz, örneğin Gson)

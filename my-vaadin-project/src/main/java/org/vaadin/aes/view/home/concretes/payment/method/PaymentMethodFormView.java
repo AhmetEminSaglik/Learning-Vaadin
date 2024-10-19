@@ -6,6 +6,7 @@ import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.radiobutton.RadioGroupVariant;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.enums.EnumPaymentMethod;
 import org.vaadin.aes.view.home.concretes.payment.method.option.PaymentMethodCashForm;
@@ -16,6 +17,7 @@ import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 import java.util.logging.Logger;
 
 @Component
+@UIScope
 public class PaymentMethodFormView extends VerticalLayout implements OrderPurchaseValidator {
 
     private static final Logger log = Logger.getLogger(PaymentMethodFormView.class.getName());
@@ -23,13 +25,14 @@ public class PaymentMethodFormView extends VerticalLayout implements OrderPurcha
     private EnumPaymentMethod selectedMethod;
     private OrderPurchaseValidator orderPurchaseValidator;
     private final RadioButtonGroup<String> radioGroup = new RadioButtonGroup<>();
-    private PaymentMethodCashForm paymentCashForm = new PaymentMethodCashForm();
-    private PaymentMethodCreditCardForm paymentCreditCardForm;// = new PaymentMethodCreditCardForm();
+    private final PaymentMethodCashForm paymentCashForm;
+    private final PaymentMethodCreditCardForm paymentCreditCardForm;// = new PaymentMethodCreditCardForm();
 
-    public PaymentMethodFormView(PaymentMethodFormViewModel viewModel, PaymentMethodCreditCardForm paymentCreditCardForm) {
+    public PaymentMethodFormView(PaymentMethodFormViewModel viewModel, PaymentMethodCreditCardForm paymentCreditCardForm, PaymentMethodCashForm paymentCashForm) {
 //        setSizeFull();
-        this.viewModel=viewModel;
+        this.viewModel = viewModel;
         this.paymentCreditCardForm = paymentCreditCardForm;
+        this.paymentCashForm = paymentCashForm;
         setHeightFull();
         setWidth("30%");
 

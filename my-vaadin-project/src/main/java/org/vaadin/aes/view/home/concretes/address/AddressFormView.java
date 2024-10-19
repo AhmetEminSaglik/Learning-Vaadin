@@ -5,6 +5,7 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
@@ -13,6 +14,7 @@ import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 import java.util.logging.Logger;
 
 @Component
+@UIScope
 public class AddressFormView extends VerticalLayout implements OrderPurchaseValidator {
 
     private static final Logger log = Logger.getLogger(AddressFormView.class.getName());

@@ -9,6 +9,7 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.vaadin.aes.enums.EnumDTO;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.model.concrete.OrderConcept;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
+@UIScope
 public class OrderBasketView extends VerticalLayout {
     private static final Logger log = Logger.getLogger(OrderBasketView.class.getName());
 // todo  burada title'i string yapinca ui iyi ioluyor ama setleyemiyoruz

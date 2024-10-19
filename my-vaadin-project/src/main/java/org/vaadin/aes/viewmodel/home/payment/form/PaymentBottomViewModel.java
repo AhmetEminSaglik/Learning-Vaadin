@@ -1,6 +1,5 @@
 package org.vaadin.aes.viewmodel.home.payment.form;
 
-import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import org.springframework.stereotype.Component;
@@ -8,6 +7,7 @@ import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.*;
 import org.vaadin.aes.view.core.CashFormatUtil;
+import org.vaadin.aes.view.core.OrderConceptPriceUtility;
 import org.vaadin.aes.view.core.notificationn.CustomNotification;
 import org.vaadin.aes.view.home.concretes.PaymentMethodView;
 import org.vaadin.aes.view.home.concretes.payment.PaymentBottomView;
@@ -31,10 +31,11 @@ public class PaymentBottomViewModel implements OrderPurchaseValidator {
     }
 
     public void calculateTotalPrice(PaymentBottomView view) {
-        double total = paymentMethodView.getOrderConceptList()
+        /*double total = paymentMethodView.getOrderConceptList()
                 .stream()
                 .mapToDouble(e -> e.getMeal().getPrice() * e.getQuantity())
-                .sum();
+                .sum();*/
+        double total = OrderConceptPriceUtility.calculate(paymentMethodView.getOrderConceptList());
 //        view.getTotalPrice().setTitle(CashFormatUtil.convertTL(total));
         view.setTotalPrice(CashFormatUtil.convertTL(total));
     }
@@ -50,7 +51,6 @@ public class PaymentBottomViewModel implements OrderPurchaseValidator {
                 Address address = createAddress(paymentMethodView);
                 Order order = createOrder(address);
                 Payment payment = createPayment(view, order);
-                log.info("Order conceptList: BEFORE CLEAR " + order.getOrderConcepts());
                 UI.getCurrent().getSession().setAttribute(EnumSessionData.ORDER.getName(), order);
                 UI.getCurrent().getSession().setAttribute(EnumSessionData.PAYMENT.getName(), payment);
 
@@ -66,9 +66,11 @@ public class PaymentBottomViewModel implements OrderPurchaseValidator {
     private Payment createPayment(PaymentBottomView view, Order order) {
         Payment payment = new Payment();
         PaymentMethod paymentMethod = new PaymentMethod();
+//        payment.setUser((User) VaadinSession.getCurrent().getAttribute(EnumDTO.USER_DATA.getName()));
         paymentMethod.setName(view.getPaymentMethodView().getPaymentMethodFormView().getSelectedMethod().getName());
         payment.setPaymentMethod(paymentMethod);
         payment.setOrder(order);
+        payment.calculateTotal();
         return payment;
     }
 

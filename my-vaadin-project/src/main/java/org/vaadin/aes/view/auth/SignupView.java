@@ -11,6 +11,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.textfield.TextFieldBase;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumCssClassName;
 import org.vaadin.aes.enums.EnumPageURL;
@@ -21,6 +22,7 @@ import java.util.stream.Stream;
 
 @Route("signup")
 @PageTitle("Sign up | Food App")
+@UIScope
 public class SignupView extends VerticalLayout {
 
     private final SignupViewModel viewModel;

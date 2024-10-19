@@ -5,6 +5,7 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
@@ -23,6 +24,7 @@ import java.util.logging.Logger;
 
 @Route("payment-method")
 @PageTitle("Payment Method Page")
+@UIScope
 public class PaymentMethodView extends AbstractLayoutView implements OrderPurchaseValidator {
 
     private final HorizontalLayout horizontalLayoutBody = new HorizontalLayout();
