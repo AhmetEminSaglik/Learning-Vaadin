@@ -11,7 +11,9 @@ public class OrderConcept implements Comparable<OrderConcept>, Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+//    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    @ManyToOne(cascade = { CascadeType.MERGE})
     @JoinColumn(name = "order_id")
     private Order order;
 

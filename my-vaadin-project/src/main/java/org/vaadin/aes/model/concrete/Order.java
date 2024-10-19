@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,13 +21,14 @@ public class Order {
 
     //    @OneToOne
 //    @JoinColumn(name = "address_id", nullable = false)
-    @ManyToOne(cascade = {CascadeType.PERSIST})
+//    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(cascade = { CascadeType.MERGE})
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
-//    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    //    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
     @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    private List<OrderConcept> orderConcepts;
+    private List<OrderConcept> orderConcepts= new ArrayList<>();
 
     @OneToOne(mappedBy = "order")
     private Payment payment;
@@ -98,8 +100,8 @@ public class Order {
     public String toString() {
         return "Order{" +
                 "id=" + id +
-                ", user=" + user +
-                ", address=" + address +
+//                ", user=" + user +
+//                ", address=" + address +
                 ", orderConcepts=" + orderConcepts +
                 ", payment=" + payment +
                 ", createdAt=" + createdAt +

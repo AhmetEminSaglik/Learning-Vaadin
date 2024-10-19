@@ -17,6 +17,7 @@ import org.vaadin.aes.view.home.concretes.payment.PaymentBottomView;
 import org.vaadin.aes.view.home.concretes.payment.method.PaymentMethodFormView;
 import org.vaadin.aes.viewmodel.home.service.OrderPurchaseValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -24,11 +25,9 @@ import java.util.logging.Logger;
 @PageTitle("Payment Method Page")
 public class PaymentMethodView extends AbstractLayoutView implements OrderPurchaseValidator {
 
-//    private final PaymentMethodViewModel viewModel;
-
     private final HorizontalLayout horizontalLayoutBody = new HorizontalLayout();
 
-    private List<OrderConcept> orderConceptList;
+    private List<OrderConcept> orderConceptList = new ArrayList<>();
     private final PaymentMethodFormView paymentMethodFormView;// = new PaymentMethodFormView();
     private final MyOrderView myOrderView;
     private final PaymentBottomView paymentBottomView;
@@ -45,8 +44,8 @@ public class PaymentMethodView extends AbstractLayoutView implements OrderPurcha
         this.paymentBottomView = paymentBottomView;
         this.addressFormView = addressFormView;
         setValidators();
-
-        log.info(">>> orderConceptList: "+orderConceptList);
+        log.info("PaymentMethodView: " + this);
+        log.info("PaymentMethodView >>> orderConceptList: " + orderConceptList);
 
         myOrderView = new MyOrderView(orderConceptList);
         paymentBottomView.setPaymentMethodView(this);
@@ -80,10 +79,6 @@ public class PaymentMethodView extends AbstractLayoutView implements OrderPurcha
         validatorAddressForm = addressFormView;
         validatorPaymentMethodForm = paymentMethodFormView;
     }
-
-//    public PaymentMethodViewModel getViewModel() {
-//        return viewModel;
-//    }
 
     public PaymentMethodFormView getPaymentMethodFormView() {
         return paymentMethodFormView;

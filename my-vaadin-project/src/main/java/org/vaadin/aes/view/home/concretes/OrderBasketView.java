@@ -84,6 +84,7 @@ public class OrderBasketView extends VerticalLayout {
 
 //        innerLayout.add(spanTitle);
 //        innerLayout.add(spanTotal);
+        log.info("OrderBaskerView'e geldi: "+this);
         setActionBtnBuyAll(btnBuyAll);
         innerLayout.add(innerDiv);
         innerLayout.add(btnBuyAll);
@@ -113,6 +114,7 @@ public class OrderBasketView extends VerticalLayout {
     }
 
     private void setActionBtnBuyAll(Button button) {
+        log.info("OrderBaskerView'e --> btnBuyAll buy item fonksiyonu eklendi");
         button.addClickShortcut(Key.ENTER);
         button.addClickListener(e -> viewModel.buyItems());
     }

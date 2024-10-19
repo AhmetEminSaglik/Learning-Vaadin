@@ -1,8 +1,8 @@
 package org.vaadin.aes.viewmodel.home.payment.form;
 
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H3;
 import org.springframework.stereotype.Component;
 import org.vaadin.aes.enums.EnumPageURL;
 import org.vaadin.aes.enums.EnumSessionData;
@@ -40,18 +40,24 @@ public class PaymentBottomViewModel implements OrderPurchaseValidator {
     }
 
     public void addClickListenerBtnPay(PaymentBottomView view, Button btnPay) {
+//        btnPay.getgetListeners(ClickEvent.class).forEach(btnPay::removeListener);
         btnPay.addClickListener(e -> {
             if (isValid()) {
-
+                log.info("btnPay --> addClickListenerBtnPay: worked: ");
                 String msg = "Successfully ordered.";
                 CustomNotification.showShort(msg);
 
                 Address address = createAddress(paymentMethodView);
-                Order order = createOrder( address);
+                Order order = createOrder(address);
                 Payment payment = createPayment(view, order);
-
+                log.info("Order conceptList: BEFORE CLEAR " + order.getOrderConcepts());
                 UI.getCurrent().getSession().setAttribute(EnumSessionData.ORDER.getName(), order);
                 UI.getCurrent().getSession().setAttribute(EnumSessionData.PAYMENT.getName(), payment);
+
+//                paymentMethodView.clearOrderConceptList();
+//                log.info("Order conceptList: AFTER CLEAR "+order.getOrderConcepts());
+//                log.info("Order conceptList: AFTER CLEAR  --> getAttribute  : "+UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER.getName()));
+                log.info("\nUI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER.getName(), order)--> : \n" + UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER.getName()));
                 UI.getCurrent().navigate(EnumPageURL.ONLINE_PURCHASE.getUrl());
             }
         });
@@ -77,6 +83,7 @@ public class PaymentBottomViewModel implements OrderPurchaseValidator {
     private Order createOrder(Address address) {
         Order order = new Order();
         order.setOrderConcepts(paymentMethodView.getOrderConceptList());
+        log.info("paymentMethodView OrderConceptList: " + paymentMethodView.getOrderConceptList());
         order.setUser((User) UI.getCurrent().getSession().getAttribute(EnumSessionData.USER_DATA.getName()));
         order.setAddress(address);
         return order;

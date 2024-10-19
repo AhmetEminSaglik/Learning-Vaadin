@@ -1,9 +1,10 @@
 package org.vaadin.aes.viewmodel.home.onlinepurchasing;
 
+import com.vaadin.flow.component.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.vaadin.aes.enums.EnumSessionData;
 import org.vaadin.aes.model.concrete.Address;
-import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.concrete.Order;
 import org.vaadin.aes.model.concrete.OrderConcept;
 import org.vaadin.aes.service.abstracts.OrderConceptService;
@@ -41,16 +42,21 @@ public class OnlinePurchasingViewModel {
 
     public void saveData(OnlinePurchasingView view) {
         order = view.getOrder();
-//        saveAddress();
-//        saveOrderConcept();
-        log.info("Order to save: " + order);
-        saveOrderConcept();
+        log.info("Gelen Order "+order);
+        saveAddress();
         order = saveOrder();
-        clearOrderData();
+        saveOrderConcept();
+        clearOrderData(view);
     }
 
-    private void clearOrderData() {
-        order = new Order();
+    private void clearOrderData(OnlinePurchasingView view) {
+//        order = new Order();
+//        order = new Order();
+        view.clearOrder();
+        log.info("Before clear: "+  UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER_CONCEPT_LIST.getName()));
+        List<OrderConcept> orderConceptList= (List<OrderConcept>) UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER_CONCEPT_LIST.getName());
+        orderConceptList.clear();
+        log.info("After clear: "+ UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER_CONCEPT_LIST.getName()));
     }
 
 /*    private List<Meal> saveMealList() {
@@ -80,8 +86,8 @@ public class OnlinePurchasingViewModel {
 //            Meal tmpMeal = mealService.save(e.getMeal());
 //            e.setMeal(tmpMeal);
             e.setOrder(order);
-            log.info("OrderConcept data: "+e);
-            OrderConcept orderConcept=orderConceptService.save(e);
+            log.info("OrderConcept data: " + e);
+            OrderConcept orderConcept = orderConceptService.save(e);
             savedOrderConceptList.add(orderConcept);
         });
         order.setOrderConcepts(savedOrderConceptList);
@@ -107,6 +113,12 @@ public class OnlinePurchasingViewModel {
         log.info("saved Order: " + order);
         return order;
     }
+    /*private Order updateOrderConceptInOrder() {
+
+        order = orderService.save(order);
+        log.info("Updated Order: " + order);
+        return order;
+    }*/
 
     private void saveAddress() {
         Address address = addressService.save(order.getAddress());

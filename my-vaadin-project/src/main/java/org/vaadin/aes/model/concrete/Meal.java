@@ -85,7 +85,7 @@ public class Meal implements Comparable<Meal> {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + getPrice() +
-                ", thumbnail='" + thumbnail + '\'' +
+//                ", thumbnail='" + thumbnail + '\'' +
                 '}';
     }
 }

@@ -25,15 +25,21 @@ public class OnlinePurchasingView extends AbstractLayoutView {
     @Autowired
     public OnlinePurchasingView(OnlinePurchasingViewModel viewModel) {
         super(EnumPageURL.ONLINE_PURCHASE);
-
+        log.info("Initialize edilen OnlinePurchasingView: " + this);
         this.viewModel = viewModel;
         order = (Order) UI.getCurrent().getSession().getAttribute(EnumSessionData.ORDER.getName());
+
+        log.info("Her seferinde yeni order gelmeli:  " + order);
         payment = (Payment) UI.getCurrent().getSession().getAttribute(EnumSessionData.PAYMENT.getName());
         viewModel.saveData(this);
     }
 
     public Order getOrder() {
         return order;
+    }
+
+    public void clearOrder() {
+        order = new Order();
     }
 
     public Payment getPayment() {

@@ -27,11 +27,7 @@ public class PaymentBottomView extends HorizontalLayout implements OrderPurchase
     @Autowired
     public PaymentBottomView(PaymentBottomViewModel viewModel) {
         this.viewModel = viewModel;
-//        viewModel = new PaymentBottomViewModel(this, paymentMethodView);
-
         addCssForView();
-
-//        viewModel.setView(this);
         add(totalPrice);
         add(btnPay);
     }
@@ -41,13 +37,6 @@ public class PaymentBottomView extends HorizontalLayout implements OrderPurchase
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
     }
-//    public  void  setOrderConceptList(List<OrderConcept> orderConceptList){
-//        this.orderConceptList=orderConceptList;
-//    }
-//
-//    public List<OrderConcept> getOrderConceptList() {
-//        return orderConceptList;
-//    }
 
     public HtmlComponent getTotalPrice() {
         return totalPrice;
@@ -62,17 +51,14 @@ public class PaymentBottomView extends HorizontalLayout implements OrderPurchase
     }
 
     public void setPaymentMethodView(PaymentMethodView paymentMethodView) {
-            log.info("setPaymentMethodView'e geldi: isPageCreatedBefore="+isPageCreatedBefore);
-        if (!isPageCreatedBefore) {
+//            log.info("setPaymentMethodView'e geldi: isPageCreatedBefore="+isPageCreatedBefore);
+//        if (!isPageCreatedBefore) {
             isPageCreatedBefore = true;
             this.paymentMethodView = paymentMethodView;
             viewModel.setPaymentMethodView(paymentMethodView);
             viewModel.addClickListenerBtnPay(this, btnPay);
             viewModel.calculateTotalPrice(this);
-            log.info("setPaymentMethodView'e geldi this: " + this);
-            log.info("setPaymentMethodView'e geldi viewModel: " + viewModel);
-            log.info("setPaymentMethodView'e geldi btnPay: " + btnPay);
-        }
+//        }
     }
 
     @Override

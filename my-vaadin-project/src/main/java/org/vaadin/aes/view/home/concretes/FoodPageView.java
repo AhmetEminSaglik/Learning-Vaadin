@@ -15,23 +15,23 @@ import org.vaadin.aes.model.concrete.OrderConcept;
 import org.vaadin.aes.view.core.CashFormatUtil;
 import org.vaadin.aes.view.core.CustomHtmlComponents;
 import org.vaadin.aes.view.home.abstracts.AbstractLayoutView;
-import org.vaadin.aes.viewmodel.home.FoodViewModel;
+import org.vaadin.aes.viewmodel.home.FoodPageViewModel;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 @Route("food-page")
 @PageTitle("Food Page")
-public class FoodView extends AbstractLayoutView {
-    private static final Logger log = Logger.getLogger(FoodView.class.getName());
+public class FoodPageView extends AbstractLayoutView {
+    private static final Logger log = Logger.getLogger(FoodPageView.class.getName());
 
-    private final FoodViewModel viewModel;
+    private final FoodPageViewModel viewModel;
     private OrderBasketView orderBasketView = new OrderBasketView();
     private final Grid<Meal> gridAllMeals = new Grid<>(Meal.class);
     private final Grid<OrderConcept> gridCustomerMeals = new Grid<>(OrderConcept.class);
 
     @Autowired
-    public FoodView(FoodViewModel viewModel) {
+    public FoodPageView(FoodPageViewModel viewModel) {
         super(EnumPageURL.FOOD_PAGE);
         this.viewModel = viewModel;
 
@@ -212,7 +212,7 @@ public class FoodView extends AbstractLayoutView {
         customHeader.addToRightNavBar(divOrderBasket);
     }
 
-    public FoodViewModel getViewModel() {
+    public FoodPageViewModel getViewModel() {
         return viewModel;
     }
 

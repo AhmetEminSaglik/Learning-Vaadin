@@ -55,7 +55,7 @@ public class OrderBasketViewModel {
 
     private void updateCartItemSize() {
         view.setTotalPrice(calculateTotalPriceInOrderBasket());
-        view.getOrderConceptList().forEach(meal -> log.info("Current items in Customer's Cart: " + meal));
+//        view.getOrderConceptList().forEach(meal -> log.info("Current items in Customer's Cart: " + meal));
     }
 
     private int calculateTotalItemInOrderBasket() {
@@ -70,7 +70,7 @@ public class OrderBasketViewModel {
                 .stream()
                 .mapToDouble(tmp -> tmp.getMeal().getPrice() * tmp.getQuantity())
                 .sum();
-        log.info("Calculated total price in order basket is : " + total);
+//        log.info("Calculated total price in order basket is : " + total);
         return total;
 
     }
