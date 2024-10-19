@@ -51,14 +51,14 @@ public class PaymentBottomView extends HorizontalLayout implements OrderPurchase
     }
 
     public void setPaymentMethodView(PaymentMethodView paymentMethodView) {
-//            log.info("setPaymentMethodView'e geldi: isPageCreatedBefore="+isPageCreatedBefore);
-//        if (!isPageCreatedBefore) {
+            log.info("setPaymentMethodView'e geldi: isPageCreatedBefore="+isPageCreatedBefore);
+        if (!isPageCreatedBefore) {
             isPageCreatedBefore = true;
             this.paymentMethodView = paymentMethodView;
             viewModel.setPaymentMethodView(paymentMethodView);
             viewModel.addClickListenerBtnPay(this, btnPay);
             viewModel.calculateTotalPrice(this);
-//        }
+        }
     }
 
     @Override
