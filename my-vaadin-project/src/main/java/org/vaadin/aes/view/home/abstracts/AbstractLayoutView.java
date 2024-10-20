@@ -22,15 +22,16 @@ public abstract class AbstractLayoutView extends VerticalLayout /*implements Bef
     private final VerticalLayout body = new VerticalLayout();
 
     public AbstractLayoutView(EnumPageURL enumPageURL) {
+        this.customHeader = new CustomHeader(enumPageURL);
         if (!isUserLoggedIn()) {
             navigateToLogin();
+            log.info("User not found. will be directed to Login page");
             return;
         }
 
 
         log.info(getClassName() + " userData should be found. Go on " + getClass().getSimpleName() + " page");
 //        this.enumPageURL = enumPageURL;
-        this.customHeader = new CustomHeader(enumPageURL);
         setSizeFull();
         body.setSizeFull();
 

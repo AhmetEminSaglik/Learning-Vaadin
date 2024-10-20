@@ -3,6 +3,7 @@ package org.vaadin.aes.enums;
 public enum EnumPageURL {
     SIGNUP_PAGE("Signup Page", "signup",""),
     LOGIN_PAGE("Login Page", "login",""),
+    EXIT("Exit", "login",""),
     FOOD_PAGE("Food Page", "food-page","images/food.jpg"),
     MY_ORDERS("My Orders Page", "my-orders","images/my-orders.png"),
     PAYMENT("Payment Page", "payment","images/dollar.png"),
