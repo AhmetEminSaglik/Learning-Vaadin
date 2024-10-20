@@ -83,7 +83,7 @@ public class OrderConcept implements Comparable<OrderConcept>, Serializable {
 
     @Override
     public String toString() {
-        return "OrderConcept{" +
+        return "\nOrderConcept{" +
                 "id=" + id +
 //                ", order=" + order.getId() +
                 ", meal=" + meal +

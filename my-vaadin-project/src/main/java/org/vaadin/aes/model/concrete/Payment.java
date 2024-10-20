@@ -14,6 +14,7 @@ public class Payment {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+//    @OneToOne(fetch = FetchType.EAGER)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
@@ -85,7 +86,7 @@ public class Payment {
     public String toString() {
         return "Payment{" +
                 "id=" + id +
-                ", order=" + order +
+//                ", order=" + order +
                 ", total=" + total +
                 ", paymentMethod=" + paymentMethod +
                 '}';

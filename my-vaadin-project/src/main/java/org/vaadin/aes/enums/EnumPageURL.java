@@ -4,7 +4,7 @@ public enum EnumPageURL {
     SIGNUP_PAGE("Signup Page", "signup",""),
     LOGIN_PAGE("Login Page", "login",""),
     FOOD_PAGE("Food Page", "food-page","images/food.jpg"),
-    PROFILE("Profile Page", "profile","images/profile.png"),
+    MY_ORDERS("My Orders Page", "my-orders","images/my-orders.png"),
     PAYMENT("Payment Page", "payment","images/dollar.png"),
     PAYMENT_METHOD("Payment Method Page", "payment-method","images/payment-method.jpg"),
     ONLINE_PURCHASE("Online Purchase Page", "online-purchasing","images/payment-method.jpg");

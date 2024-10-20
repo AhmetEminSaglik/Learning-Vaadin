@@ -10,4 +10,5 @@ public interface PaymentService {
     List<Payment> findAll();
 
     List<Payment> findAllByUserId(long id);
+    Payment findByOrderId(long orderId);
 }

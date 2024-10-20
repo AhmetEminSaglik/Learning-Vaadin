@@ -8,5 +8,6 @@ public interface OrderConceptService {
     OrderConcept save(OrderConcept orderConcept);
     List<OrderConcept> save(List<OrderConcept> orderConceptList);
     OrderConcept findById(long id);
+    List<OrderConcept> findAllByOrderId(long orderId);
 
 }

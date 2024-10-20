@@ -1,12 +1,9 @@
 package org.vaadin.aes.service.concretes;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.vaadin.aes.model.concrete.Meal;
 import org.vaadin.aes.model.concrete.OrderConcept;
 import org.vaadin.aes.repository.abstracts.OrderConceptRepository;
@@ -29,10 +26,10 @@ public class OrderConceptServiceImpl implements OrderConceptService {
 
     @Override
     public OrderConcept save(OrderConcept orderConcept) {
-        log.info("OrderConcept Save Method First Line: "+orderConcept);
+        log.info("OrderConcept Save Method First Line: " + orderConcept);
         Meal tmpMeal = mealService.save(orderConcept.getMeal());
         orderConcept.setMeal(tmpMeal);
-        log.info("Meal: "+tmpMeal);
+        log.info("Meal: " + tmpMeal);
         orderConcept = orderConceptRepository.save(orderConcept);
         log.info("Order Concept data is saved: " + orderConcept);
         return orderConcept;
@@ -46,5 +43,13 @@ public class OrderConceptServiceImpl implements OrderConceptService {
     @Override
     public OrderConcept findById(long id) {
         return orderConceptRepository.findById(id).get();
+    }
+
+    @Override
+    public List<OrderConcept> findAllByOrderId(long orderId) {
+//        List<OrderConcept> orderConceptList = orderConceptRepository.findAllByOrderId(orderId);
+//        log.info("Retireved orderConceptList by orderId: " + orderId + " list: " + orderConceptList);
+//        return orderConceptList;
+        return orderConceptRepository.findAllByOrderId(orderId);
     }
 }

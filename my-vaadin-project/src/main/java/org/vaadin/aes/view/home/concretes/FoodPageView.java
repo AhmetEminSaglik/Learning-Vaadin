@@ -2,6 +2,7 @@ package org.vaadin.aes.view.home.concretes;
 
 import com.vaadin.flow.component.HtmlComponent;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -65,10 +66,14 @@ public class FoodPageView extends AbstractLayoutView {
         gridAllMeals.setColumns("name");
         gridAllMeals.getColumns().get(0).setAutoWidth(true);
 
-        gridAllMeals.addComponentColumn(this::createPriceForGridComponent).setHeader("Price").setAutoWidth(true);
-        gridAllMeals.addComponentColumn(this::createImageForGridComponent).setHeader("Image").setAutoWidth(true);
-        gridAllMeals.addComponentColumn(this::createAddButtonForGridComponent).setHeader("Process").setAutoWidth(true);
+        gridAllMeals.addComponentColumn(this::createPriceForGridComponent).setHeader("Price");
+        gridAllMeals.addComponentColumn(this::createImageForGridComponent).setHeader("Image");
+        gridAllMeals.addComponentColumn(this::createAddButtonForGridComponent).setHeader("Process");
 
+        gridAllMeals.getColumns().forEach(e -> {
+            e.setTextAlign(ColumnTextAlign.CENTER);
+            e.setAutoWidth(true);
+        });
 
         verticalLayout.add(gridAllMeals);
         return verticalLayout;
@@ -90,11 +95,17 @@ public class FoodPageView extends AbstractLayoutView {
         gridCustomerMeals.setHeight("100%");
 
 
-        gridCustomerMeals.addComponentColumn(e -> createNameForGridComponent(e.getMeal())).setHeader("Name").setAutoWidth(true);
-        gridCustomerMeals.addComponentColumn(e -> createPriceForGridComponent(e.getMeal())).setHeader("Price").setAutoWidth(true);
-        gridCustomerMeals.addComponentColumn(e -> createImageForGridComponent(e.getMeal())).setHeader("Image").setAutoWidth(true);
-        gridCustomerMeals.addComponentColumn(this::createQuantityAndPriceGridComponent).setHeader("Total").setAutoWidth(true);
-        gridCustomerMeals.addComponentColumn(e -> createRemoveButtonForGridComponent(e.getMeal())).setHeader("Process").setAutoWidth(true);
+        gridCustomerMeals.addComponentColumn(e -> createNameForGridComponent(e.getMeal())).setHeader("Name");
+        gridCustomerMeals.addComponentColumn(e -> createPriceForGridComponent(e.getMeal())).setHeader("Price");
+        gridCustomerMeals.addComponentColumn(e -> createImageForGridComponent(e.getMeal())).setHeader("Image");
+        gridCustomerMeals.addComponentColumn(this::createQuantityAndPriceGridComponent).setHeader("Total");
+        gridCustomerMeals.addComponentColumn(e -> createRemoveButtonForGridComponent(e.getMeal())).setHeader("Process");
+
+
+        gridCustomerMeals.getColumns().forEach(e -> {
+            e.setTextAlign(ColumnTextAlign.CENTER);
+            e.setAutoWidth(true);
+        });
 
         verticalLayout.add(gridCustomerMeals);
 

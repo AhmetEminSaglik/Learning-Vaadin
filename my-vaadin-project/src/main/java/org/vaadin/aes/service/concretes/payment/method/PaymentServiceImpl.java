@@ -39,4 +39,11 @@ public class PaymentServiceImpl implements PaymentService {
         return repository.findAllByUserId(id);
     }
 
+    @Override
+    public Payment findByOrderId(long orderId) {
+        Payment payment = repository.findByOrderId(orderId);
+        log.info("Found Payment by orderId: " + orderId + " Payment: " + payment);
+        return payment;
+    }
+
 }

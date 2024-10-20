@@ -22,13 +22,14 @@ public class Order {
     //    @OneToOne
 //    @JoinColumn(name = "address_id", nullable = false)
 //    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @ManyToOne(cascade = { CascadeType.MERGE})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
 
     //    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    @OneToMany(mappedBy = "order", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
-    private List<OrderConcept> orderConcepts= new ArrayList<>();
+//    @OneToMany(mappedBy = "order",fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.PERSIST}, orphanRemoval = true)
+    private List<OrderConcept> orderConcepts = new ArrayList<>();
 
     @OneToOne(mappedBy = "order")
     private Payment payment;
@@ -103,7 +104,7 @@ public class Order {
 //                ", user=" + user +
 //                ", address=" + address +
                 ", orderConcepts=" + orderConcepts +
-                ", payment=" + payment +
+//                ", payment=" + payment +
                 ", createdAt=" + createdAt +
                 '}';
     }

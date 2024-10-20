@@ -19,7 +19,7 @@ public class LeftDrawer extends VerticalLayout {
         Div div = createDivForDrawer();
 
         div.add(getItem(EnumPageURL.FOOD_PAGE));
-        div.add(getItem(EnumPageURL.PROFILE));
+        div.add(getItem(EnumPageURL.MY_ORDERS));
         div.add(getItem(EnumPageURL.PAYMENT));
 
         add(div);
