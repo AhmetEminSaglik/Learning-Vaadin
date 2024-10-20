@@ -22,7 +22,7 @@ public class LeftDrawer extends VerticalLayout {
 
         div.add(getItem(EnumPageURL.FOOD_PAGE));
         div.add(getItem(EnumPageURL.MY_ORDERS));
-        div.add(getItem(EnumPageURL.PAYMENT));
+//        div.add(getItem(EnumPageURL.PAYMENT));
         div.add(getLogoutItem());
 
         add(div);
