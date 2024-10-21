@@ -95,7 +95,3 @@ git clone https://github.com/AhmetEminSaglik/Learning-Vaadin.git
 **5.** Open a web browser and navigate to `http://localhost:8080` (or the port specified in your application.properties).
 
 **6.** You can now register a new user account or log in to explore the application.
-
-
-**2.** Open the project in Intellij Idea.
-
